@@ -1,0 +1,177 @@
+:root{
+  --brand-green: #496b4c;
+  --brand-green-dark: #143b31;
+  --brand-sage: #dfe9d8;
+  --brand-sage-2: #eef4ea;
+  --brand-clay: #b87056;
+  --brand-ink: #0f1714;
+  --text: #121815;
+  --muted: #68746d;
+  --bg: #f4f6f0;
+  --card-bg: #ffffff;
+  --surface: #fbfcf8;
+  --border: rgba(15, 20, 18, 0.10);
+  --shadow-soft: 0 24px 70px rgba(25, 54, 42, 0.13);
+  --shadow-sm: 0 14px 34px rgba(25, 54, 42, 0.08);
+  --shadow-ring: 0 0 0 1px rgba(255,255,255,.7) inset;
+  --radius: 10px;
+  --max-width: 1100px;
+  --font-sans: 'Sora', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  --font-display: 'Playfair Display', 'Times New Roman', serif;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{font-family:var(--font-sans);background:var(--bg);color:var(--text);margin:0;padding:0}
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(740px circle at 5% -12%, rgba(73, 107, 76, 0.14), transparent 55%),
+    radial-gradient(660px circle at 105% 1%, rgba(184, 112, 86, 0.12), transparent 48%),
+    linear-gradient(180deg, #fbfcf8 0%, var(--bg) 48%, #edf3e8 100%);
+}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit}
+.display-font{font-family:var(--font-display);font-weight:600}
+
+::selection{background:var(--brand-sage);color:var(--brand-green-dark)}
+
+.ui-shell{
+  width:min(100%, 1240px);
+  margin-inline:auto;
+  padding-inline:clamp(1rem, 3vw, 2rem);
+}
+
+.ui-panel{
+  border:1px solid var(--border);
+  background:rgba(255,255,255,0.9);
+  box-shadow:var(--shadow-sm);
+  backdrop-filter:blur(14px);
+  position:relative;
+}
+
+.ui-button-primary,
+.ui-button-secondary,
+.ui-button-danger{
+  display:inline-flex;
+  min-height:2.55rem;
+  align-items:center;
+  justify-content:center;
+  gap:.5rem;
+  border-radius:999px;
+  padding:.65rem 1rem;
+  font-size:.875rem;
+  font-weight:700;
+  transition:transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+}
+
+.ui-button-primary{
+  border:1px solid rgba(23,63,51,.18);
+  background:linear-gradient(180deg, #225344 0%, var(--brand-green-dark) 100%);
+  color:#fff;
+  box-shadow:0 12px 28px rgba(23,63,51,.18);
+}
+
+.ui-button-secondary{
+  border:1px solid var(--border);
+  background:linear-gradient(180deg, #fff 0%, #f8faf5 100%);
+  color:var(--brand-green-dark);
+}
+
+.ui-button-danger{
+  border:1px solid rgba(127,29,29,.16);
+  background:#7f1d1d;
+  color:#fff;
+}
+
+.ui-button-primary:hover,
+.ui-button-secondary:hover,
+.ui-button-danger:hover{
+  transform:translateY(-1px);
+  box-shadow:0 14px 30px rgba(23,63,51,.14);
+}
+
+.ui-field{
+  width:100%;
+  border:1px solid rgba(15,20,18,.14);
+  border-radius:12px;
+  background:#fff;
+  color:var(--text);
+  padding:.82rem .95rem;
+  font-size:.9rem;
+  outline:none;
+  transition:border-color .18s ease, box-shadow .18s ease;
+}
+
+.ui-field:focus{
+  border-color:rgba(63,95,69,.65);
+  box-shadow:0 0 0 4px rgba(63,95,69,.12);
+}
+
+.ck.ck-editor__main>.ck-editor__editable{
+  min-height:160px;
+  border-radius:0 0 10px 10px;
+}
+
+.ui-kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:.55rem;
+  border:1px solid rgba(18,24,21,.1);
+  border-radius:999px;
+  background:#fff;
+  color:var(--muted);
+  padding:.42rem .75rem;
+  font-size:.72rem;
+  font-weight:800;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+
+.ui-kicker::before{
+  content:"";
+  width:.45rem;
+  height:.45rem;
+  border-radius:999px;
+  background:var(--brand-clay);
+}
+
+.ui-card{
+  border:1px solid rgba(15,20,18,.08);
+  border-radius:18px;
+  background:#fff;
+  box-shadow:var(--shadow-sm), var(--shadow-ring);
+}
+
+.ui-chip{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px;
+  background:var(--brand-sage);
+  color:var(--brand-green-dark);
+  padding:.38rem .78rem;
+  font-size:.86rem;
+  font-weight:800;
+}
+
+.ui-table tbody tr{
+  transition:background .16s ease, transform .16s ease;
+}
+
+.ui-table tbody tr:hover{
+  background:#f8fbf5;
+}
+
+.ui-table th{
+  white-space:nowrap;
+}
+
+.ui-table td{
+  vertical-align:middle;
+}
+
+.ui-empty{
+  background:
+    linear-gradient(135deg, rgba(223,233,216,.6), rgba(255,255,255,.8));
+}

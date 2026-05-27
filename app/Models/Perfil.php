@@ -1,0 +1,16 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Perfil extends Model
+{
+    protected $table = 'perfiles';
+
+    public $timestamps = false;
+
+    protected $fillable = [
+        'nombre',
+    ];
+}
