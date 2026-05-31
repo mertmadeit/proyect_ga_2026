@@ -2,16 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\FacturaCreada;
+use App\Models\Cliente;
+use App\Models\Estadofactura;
+use App\Models\Factura;
+use App\Models\Formapago;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use App\Models\Factura;
-use App\Models\Cliente;
-use App\Models\Formapago;
-use App\Models\Estadofactura;
 use Barryvdh\DomPDF\Facade\Pdf;
+
 class FacturasController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index']);
+        $this->middleware('admin')->only(['create', 'store', 'edit', 'update', 'destroy']);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -89,7 +98,20 @@ class FacturasController extends Controller
             ? 'Factura creada y PDF generado exitosamente.'
             : 'Factura creada, pero no se pudo generar el PDF.';
 
-        return redirect()->route('facturas.index')->with('success', $mensaje);
+        try {
+            $destinatario = auth()->user()?->email;
+            if ($destinatario) {
+                Mail::to($destinatario)->send(new FacturaCreada($factura));
+            }
+        } catch (\Throwable $e) {
+            Log::error('No se pudo enviar el correo de factura creada.', [
+                'factura_id' => $factura->id,
+                'error' => $e->getMessage(),
+            ]);
+            $mensaje .= ' El correo no pudo enviarse.';
+        }
+
+        return redirect()->route('facturas.index')->with('mensaje', $mensaje);
     }
 
     /**
@@ -150,6 +172,6 @@ class FacturasController extends Controller
 
         $factura->delete();
 
-        return redirect()->route('facturas.index');
+        return redirect()->route('facturas.index')->with('mensaje', 'Factura eliminada exitosamente.');
     }
 }

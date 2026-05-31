@@ -13,7 +13,7 @@ class Factura extends Model
         'detalles',
         'valor',
         'archivo',
-        'idcliente',
+        'idCliente',
         'idforma',
         'idestado',
     ];

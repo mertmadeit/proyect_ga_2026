@@ -3,9 +3,6 @@
     @php
     $navLinks = [
     ['href' => url('/'), 'label' => 'Home'],
-    ['href' => route('perfiles.index'), 'label' => 'Perfiles'],
-    ['href' => route('clientes.index'), 'label' => 'Clientes'],
-    ['href' => route('facturas.index'), 'label' => 'Facturas'],
     ['href' => '#contact', 'label' => 'Contact'],
     ];
     @endphp

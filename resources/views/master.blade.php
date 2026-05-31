@@ -14,6 +14,7 @@
     @include('sections.nav')
 
     <main class="ui-shell py-8 sm:py-12">
+        @include('Sections.mensajes')
         @yield('content')
     </main>
 

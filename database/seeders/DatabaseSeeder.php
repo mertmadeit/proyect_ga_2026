@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Perfil;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,11 +14,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        Perfil::query()->upsert([
+            ['id' => 1, 'nombre' => 'Admin'],
+            ['id' => 2, 'nombre' => 'Supervisor'],
+            ['id' => 3, 'nombre' => 'Consulta'],
+        ], ['id'], ['nombre']);
 
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'idperfil' => 1,
         ]);
     }
 }

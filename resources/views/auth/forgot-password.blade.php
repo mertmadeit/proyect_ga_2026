@@ -5,6 +5,17 @@
 
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
+    @if (session('mensaje'))
+        <div class="mb-4 rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">
+            {{ session('mensaje') }}
+        </div>
+    @endif
+    @if (session('reset_url'))
+        <div class="mb-4 rounded-md border border-emerald-300 bg-emerald-50 p-3 text-sm text-emerald-900">
+            <p class="font-semibold">Enlace de recuperacion:</p>
+            <a class="mt-1 block break-all underline" href="{{ session('reset_url') }}">{{ session('reset_url') }}</a>
+        </div>
+    @endif
 
     <form method="POST" action="{{ route('password.email') }}">
         @csrf

@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    'testmail' => [
+        'enabled' => env('TESTMAIL_ENABLED', false),
+        'namespace' => env('TESTMAIL_NAMESPACE'),
+        'tag' => env('TESTMAIL_TAG', 'password-reset'),
+        'api_key' => env('TESTMAIL_APIKEY'),
+    ],
+
 ];

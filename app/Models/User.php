@@ -46,4 +46,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function perfil()
+    {
+        return $this->belongsTo(Perfil::class, 'idperfil');
+    }
 }

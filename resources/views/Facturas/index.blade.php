@@ -10,7 +10,14 @@
 			<h1 class="display-font mt-3 text-4xl text-(--text)">Facturas</h1>
 			<p class="mt-2 text-sm text-(--muted)">Consulta clientes, montos y archivos PDF registrados.</p>
 		</div>
-		<a href="{{ route('facturas.create') }}" class="ui-button-primary">Agregar factura</a>
+		<div class="flex flex-wrap items-center justify-end gap-2">
+			@auth
+				<a href="{{ route('facturas.reporte') }}" class="ui-button-secondary">Descargar reporte PDF</a>
+			@endauth
+			@if (auth()->check() && (int) auth()->user()->idperfil === 1)
+				<a href="{{ route('facturas.create') }}" class="ui-button-primary">Agregar factura</a>
+			@endif
+		</div>
 	</div>
 
 	<div class="mb-5 grid gap-4 sm:grid-cols-3">
@@ -29,12 +36,6 @@
 	</div>
 
 	<div class="ui-panel overflow-hidden rounded-[22px]">
-		@if (session('success'))
-			<div class="border-b border-black/5 px-6 py-4">
-				<div class="rounded-[12px] border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800">{{ session('success') }}</div>
-			</div>
-		@endif
-
 		<div class="overflow-x-auto">
 			<table class="ui-table min-w-full divide-y divide-black/5">
 				<thead class="bg-[#f8fbf5]">
@@ -67,14 +68,18 @@
 								@endif
 							</td>
 							<td class="px-6 py-4 text-right">
-								<div class="inline-flex items-center justify-end gap-2 whitespace-nowrap">
-									<a href="{{ route('facturas.edit', $factura->id) }}" class="ui-button-secondary min-h-0 px-3 py-1.5">Editar</a>
-									<form action="{{ route('facturas.destroy', $factura->id) }}" method="POST" class="inline">
-										@csrf
-										@method('DELETE')
-										<button type="submit" onclick="return confirm('Eliminar factura?')" class="ui-button-danger min-h-0 px-3 py-1.5">Eliminar</button>
-									</form>
-								</div>
+								@if (auth()->check() && (int) auth()->user()->idperfil === 1)
+									<div class="inline-flex items-center justify-end gap-2 whitespace-nowrap">
+										<a href="{{ route('facturas.edit', $factura->id) }}" class="ui-button-secondary min-h-0 px-3 py-1.5">Editar</a>
+										<form action="{{ route('facturas.destroy', $factura->id) }}" method="POST" class="inline">
+											@csrf
+											@method('DELETE')
+											<button type="submit" onclick="return confirm('Eliminar factura?')" class="ui-button-danger min-h-0 px-3 py-1.5">Eliminar</button>
+										</form>
+									</div>
+								@else
+									<span class="text-xs font-semibold uppercase tracking-[0.14em] text-(--muted)">Solo lectura</span>
+								@endif
 							</td>
 						</tr>
 					@empty
@@ -82,7 +87,9 @@
 							<td colspan="6" class="ui-empty px-6 py-16 text-center">
 								<p class="text-lg font-extrabold text-(--brand-green-dark)">No hay facturas registradas.</p>
 								<p class="mt-2 text-sm text-(--muted)">Crea la primera factura para comenzar el control de ventas.</p>
-								<a href="{{ route('facturas.create') }}" class="ui-button-primary mt-4">Agregar factura</a>
+								@if (auth()->check() && (int) auth()->user()->idperfil === 1)
+									<a href="{{ route('facturas.create') }}" class="ui-button-primary mt-4">Agregar factura</a>
+								@endif
 							</td>
 						</tr>
 					@endforelse

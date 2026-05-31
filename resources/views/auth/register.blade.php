@@ -16,6 +16,20 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        <!-- Perfil -->
+        <div class="mt-4">
+            <x-input-label for="idperfil" :value="__('Perfil')" />
+            <select id="idperfil" name="idperfil" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
+                <option value="">Selecciona un perfil</option>
+                @foreach (($perfiles ?? []) as $perfil)
+                    <option value="{{ $perfil->id }}" {{ (string) old('idperfil') === (string) $perfil->id ? 'selected' : '' }}>
+                        {{ $perfil->nombre }}
+                    </option>
+                @endforeach
+            </select>
+            <x-input-error :messages="$errors->get('idperfil')" class="mt-2" />
+        </div>
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />

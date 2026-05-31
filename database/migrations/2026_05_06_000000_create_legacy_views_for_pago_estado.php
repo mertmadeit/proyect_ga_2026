@@ -24,15 +24,44 @@ return new class extends Migration
 
     private function createViewIfNoBaseTable(string $viewName, string $sourceTable, string $dbName): void
     {
-        $row = DB::selectOne(
-            'SELECT TABLE_TYPE AS table_type FROM information_schema.tables WHERE table_schema = ? AND table_name = ? LIMIT 1',
-            [$dbName, $viewName]
-        );
+        $objectType = $this->getObjectType($viewName, $dbName);
 
-        if ($row && isset($row->table_type) && strtoupper((string) $row->table_type) === 'BASE TABLE') {
+        if (in_array($objectType, ['BASE TABLE', 'TABLE'], true)) {
             return;
         }
 
-        DB::statement("CREATE OR REPLACE VIEW `{$viewName}` AS SELECT * FROM `{$sourceTable}`");
+        if ($objectType === 'VIEW') {
+            DB::statement("DROP VIEW IF EXISTS `{$viewName}`");
+        }
+
+        DB::statement("CREATE VIEW `{$viewName}` AS SELECT * FROM `{$sourceTable}`");
+    }
+
+    private function getObjectType(string $name, string $dbName): ?string
+    {
+        $driver = DB::getDriverName();
+
+        if ($driver === 'sqlite') {
+            $row = DB::selectOne(
+                "SELECT type FROM sqlite_master WHERE name = ? LIMIT 1",
+                [$name]
+            );
+
+            if (!$row || !isset($row->type)) {
+                return null;
+            }
+
+            $type = strtoupper((string) $row->type);
+            return $type === 'TABLE' ? 'BASE TABLE' : $type;
+        }
+
+        $row = DB::selectOne(
+            'SELECT TABLE_TYPE AS table_type FROM information_schema.tables WHERE table_schema = ? AND table_name = ? LIMIT 1',
+            [$dbName, $name]
+        );
+
+        return $row && isset($row->table_type)
+            ? strtoupper((string) $row->table_type)
+            : null;
     }
 };

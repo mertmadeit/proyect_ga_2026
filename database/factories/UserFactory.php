@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Perfil;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -23,11 +24,19 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $perfilId = Perfil::query()->value('id');
+
+        if (!$perfilId) {
+            Perfil::query()->create(['nombre' => 'Admin']);
+            $perfilId = Perfil::query()->value('id');
+        }
+
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
+            'idperfil' => $perfilId,
             'remember_token' => Str::random(10),
         ];
     }
