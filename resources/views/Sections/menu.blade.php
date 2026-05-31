@@ -1,3 +1,3 @@
-@include('sections.nav')
+@include('Sections.nav')
 
-@include('sections.header')
+@include('Sections.header')
