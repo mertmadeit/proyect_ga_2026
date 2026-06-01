@@ -30,6 +30,12 @@ class PasswordRecoveryService
         }
 
         if (Config::get('mail.default') === 'log') {
+            if (! $this->canExposeResetUrl()) {
+                return PasswordRecoveryResult::error(
+                    'No se pudo enviar el correo. Configura MAIL_MAILER=resend y RESEND_KEY en variables de entorno.'
+                );
+            }
+
             return $this->localFallback(
                 $user,
                 'Modo local: abre el siguiente enlace para cambiar tu contrasena.'
@@ -72,6 +78,12 @@ class PasswordRecoveryService
         $exposedResetUrl = $this->canExposeResetUrl() ? $resetUrl : null;
 
         if (Config::get('mail.default') === 'log') {
+            if (! $this->canExposeResetUrl()) {
+                return PasswordRecoveryResult::error(
+                    'No se pudo enviar el correo. Configura MAIL_MAILER=resend y RESEND_KEY en variables de entorno.'
+                );
+            }
+
             return PasswordRecoveryResult::success(
                 'Enlace de recuperacion generado.',
                 "Modo local activo: usa el enlace de abajo. Si activas SMTP, el destino sera {$testmailAddress}.",
