@@ -1,37 +1,40 @@
-<nav
-    class="z-50 sticky top-4 w-full max-w-7xl mx-auto rounded-3xl border border-black/10 bg-white shadow-[var(--shadow-sm)]">
+﻿<nav class="brand-nav">
     @php
-    $navLinks = [
-    ['href' => url('/'), 'label' => 'Home'],
-    ['href' => '#contact', 'label' => 'Contact'],
-    ];
+        $navLinks = [
+            ['href' => url('/'), 'label' => 'Inicio'],
+            ['href' => url('/#destacados'), 'label' => 'Coleccion'],
+            ['href' => url('/#cuidado'), 'label' => 'Cuidado'],
+            ['href' => url('/#contact'), 'label' => 'Contacto'],
+        ];
     @endphp
 
-    <div class="relative flex min-h-14 flex-wrap items-center gap-4 px-4 py-3 sm:min-h-16 sm:px-5">
-            <div class="flex items-center gap-3">
-                <div class="leading-tight">
-                    <a href="{{ url('/') }}" class="text-lg font-semibold tracking-tight text-(--brand-green-dark)">Virelle</a>
-                    <div class="text-xs text-(--muted)">Plantas & accesorios</div>
-                </div>
-            </div>
-        <ul
-            class="order-3 flex basis-full items-center justify-between gap-3 border-t border-black/5 pt-3 text-xs font-medium sm:text-sm md:absolute md:left-1/2 md:basis-auto md:-translate-x-1/2 md:justify-center md:gap-10 md:border-0 md:pt-0">
+    <div class="flex flex-wrap items-center gap-3 px-3 py-3 sm:px-4">
+        <a href="{{ url('/') }}" class="flex items-center gap-3">
+            <span class="brand-mark">V</span>
+            <span class="leading-tight">
+                <span class="block text-base font-extrabold text-[var(--brand-green-dark)]">Virelle</span>
+                <span class="block text-xs font-semibold text-[var(--muted)]">Plantas y gestion comercial</span>
+            </span>
+        </a>
+
+        <div class="order-3 flex w-full flex-wrap gap-1 border-t border-black/5 pt-3 md:order-none md:ml-8 md:w-auto md:border-0 md:pt-0">
             @foreach ($navLinks as $link)
-            <li class="flex-1 text-center md:flex-none">
-                <a class="block px-2 py-1.5 rounded-md text-(--muted) hover:text-(--brand-green-dark) hover:bg-(--brand-sage) transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--brand-green)"
+                <a class="brand-link {{ url()->current() === $link['href'] ? 'is-active' : '' }}"
                     href="{{ $link['href'] }}">{{ $link['label'] }}</a>
-            </li>
             @endforeach
-        </ul>
-        <div class="ml-auto flex shrink-0 items-center gap-2">
-            <a class="inline-flex items-center justify-center gap-2 rounded-full border border-black/10 bg-(--card-bg) px-4 py-2 text-sm font-semibold text-(--brand-green-dark) shadow-sm transition-transform hover:-translate-y-0.5 hover:bg-(--brand-sage)"
-                href="./register">
-                <span>Registrarse</span>
-            </a>
-            <a class="inline-flex items-center justify-center gap-2 rounded-full bg-(--brand-sage) px-4 py-2 text-sm font-bold text-(--brand-green-dark) transition hover:bg-white"
-                href="./login">
-                <span>Iniciar sesión</span>
-            </a>
+        </div>
+
+        <div class="brand-actions ml-auto shrink-0">
+            @auth
+                <a class="ui-button-secondary" href="{{ route('dashboard') }}">Panel</a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="ui-button-primary">Salir</button>
+                </form>
+            @else
+                <a class="ui-button-secondary" href="{{ route('register') }}">Registro</a>
+                <a class="ui-button-primary" href="{{ route('login') }}">Entrar</a>
+            @endauth
         </div>
     </div>
 </nav>

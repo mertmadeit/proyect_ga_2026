@@ -15,12 +15,6 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class FacturasController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth')->except(['index']);
-        $this->middleware('admin')->only(['create', 'store', 'edit', 'update', 'destroy']);
-    }
-
     /**
      * Display a listing of the resource.
      */

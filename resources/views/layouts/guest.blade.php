@@ -1,30 +1,55 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+﻿<!DOCTYPE html>
+<html lang="es">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>Virelle - Acceso</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        @vite(['resources/css/app.css'])
     </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
-            <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                </a>
-            </div>
+    <body class="m-0 bg-[var(--bg)] text-[var(--text)] antialiased">
+        @include('Sections.nav')
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
-                {{ $slot }}
+        <main class="ui-shell py-10 sm:py-14">
+            <div class="grid min-h-[calc(100vh-18rem)] items-center gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
+                <section class="hidden lg:block">
+                    <div class="ui-panel overflow-hidden p-8">
+                        <div class="ui-kicker">Virelle</div>
+                        <h1 class="display-font mt-6 max-w-md text-5xl leading-tight text-[var(--brand-green-dark)]">Gestion vegetal sin ruido.</h1>
+                        <p class="mt-5 max-w-md text-base leading-relaxed text-[var(--muted)]">
+                            Accede a clientes, facturas y perfiles desde un espacio sobrio, pensado para vender y dar seguimiento.
+                        </p>
+
+                        <div class="mt-10 grid gap-4">
+                            <div class="ui-photo h-72">
+                                <img src="{{ asset('img/03.jpg') }}" alt="Camino verde Virelle" loading="lazy" decoding="async">
+                            </div>
+                            <div class="ui-data-card">
+                                <p class="text-xs font-extrabold uppercase tracking-[0.08em] text-[var(--muted)]">Sesion segura</p>
+                                <p class="mt-2 text-sm leading-6 text-[var(--muted)]">Mantiene el acceso separado de la experiencia publica sin romper la identidad visual.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="w-full max-w-[540px] justify-self-center lg:justify-self-end">
+                    <div class="mb-6 lg:hidden">
+                        <div class="text-lg font-bold text-[var(--brand-green-dark)]">Virelle</div>
+                        <p class="mt-1 text-sm text-[var(--muted)]">Plantas, accesorios y facturacion organizada.</p>
+                    </div>
+
+                    <div class="ui-panel p-6 sm:p-8">
+                        {{ $slot }}
+                    </div>
+                </section>
             </div>
-        </div>
+        </main>
+
+        @include('Sections.footers')
     </body>
 </html>

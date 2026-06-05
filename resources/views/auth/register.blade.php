@@ -1,25 +1,30 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+﻿<x-guest-layout>
+    <div class="mb-7">
+        <div class="ui-kicker">Registro</div>
+        <h1 class="display-font mt-5 text-4xl leading-tight text-[var(--brand-green-dark)]">Crear cuenta</h1>
+        <p class="mt-3 text-sm leading-relaxed text-[var(--muted)]">
+            Agrega tus datos para empezar a trabajar dentro del panel de Virelle.
+        </p>
+    </div>
+
+    <form method="POST" action="{{ route('register') }}" class="space-y-5">
         @csrf
 
-        <!-- Name -->
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            <label for="name" class="text-sm font-bold text-[var(--brand-green-dark)]">Nombre</label>
+            <input id="name" class="ui-field mt-2 block w-full" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+        <div>
+            <label for="email" class="text-sm font-bold text-[var(--brand-green-dark)]">Correo electronico</label>
+            <input id="email" class="ui-field mt-2 block w-full" type="email" name="email" value="{{ old('email') }}" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Perfil -->
-        <div class="mt-4">
-            <x-input-label for="idperfil" :value="__('Perfil')" />
-            <select id="idperfil" name="idperfil" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
+        <div>
+            <label for="idperfil" class="text-sm font-bold text-[var(--brand-green-dark)]">Perfil</label>
+            <select id="idperfil" name="idperfil" class="ui-field mt-2 block w-full" required>
                 <option value="">Selecciona un perfil</option>
                 @foreach (($perfiles ?? []) as $perfil)
                     <option value="{{ $perfil->id }}" {{ (string) old('idperfil') === (string) $perfil->id ? 'selected' : '' }}>
@@ -30,11 +35,10 @@
             <x-input-error :messages="$errors->get('idperfil')" class="mt-2" />
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+        <div>
+            <label for="password" class="text-sm font-bold text-[var(--brand-green-dark)]">Contrasena</label>
 
-            <x-text-input id="password" class="block mt-1 w-full"
+            <input id="password" class="ui-field mt-2 block w-full"
                             type="password"
                             name="password"
                             required autocomplete="new-password" />
@@ -42,25 +46,24 @@
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+        <div>
+            <label for="password_confirmation" class="text-sm font-bold text-[var(--brand-green-dark)]">Confirmar contrasena</label>
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
+            <input id="password_confirmation" class="ui-field mt-2 block w-full"
                             type="password"
                             name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
+        <div class="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between">
+            <a class="ui-button-secondary w-full sm:w-auto" href="{{ route('login') }}">
+                Ya tengo cuenta
             </a>
 
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
+            <button type="submit" class="ui-button-primary w-full sm:w-auto">
+                Registrarme
+            </button>
         </div>
     </form>
 </x-guest-layout>

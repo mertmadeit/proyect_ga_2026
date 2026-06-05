@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="es">
 <head>
 	<meta charset="utf-8">
@@ -24,15 +24,15 @@
 	<table class="table">
 		<tr>
 			<th style="width: 25%">Cliente</th>
-			<td>{{ $cliente?->nombre ?? '—' }}</td>
+			<td>{{ $cliente?->nombre ?? 'â€”' }}</td>
 			<th style="width: 15%">RFC</th>
-			<td>{{ $cliente?->rfc ?? '—' }}</td>
+			<td>{{ $cliente?->rfc ?? 'â€”' }}</td>
 		</tr>
 		<tr>
 			<th>Forma de pago</th>
-			<td>{{ $forma?->nombre ?? '—' }}</td>
+			<td>{{ $forma?->nombre ?? 'â€”' }}</td>
 			<th>Estado</th>
-			<td>{{ $estado?->estado ?? '—' }}</td>
+			<td>{{ $estado?->estado ?? 'â€”' }}</td>
 		</tr>
 		<tr>
 			<th>Valor</th>
@@ -45,6 +45,6 @@
 		{!! $factura->detalles !!}
 	</div>
 
-	<p class="small">Documento generado automáticamente por el sistema.</p>
+	<p class="small">Documento generado automÃ¡ticamente por el sistema.</p>
 </body>
 </html>

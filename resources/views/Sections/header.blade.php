@@ -1,4 +1,4 @@
-<header class="relative z-20 px-4 pt-6">
+﻿<header class="relative z-20 px-4 pt-6">
     <div class="container py-8 md:py-16 lg:py-24 mx-auto">
         <div class="mb-12 md:mb-24">
             <h1
@@ -13,12 +13,12 @@
                     <span>Get Started</span>
                 </a>
                 <a href="#projects"
-                    class="inline-flex items-center justify-center gap-2 rounded-full border border-black/10 bg-(--card-bg) px-4 py-2 text-sm font-semibold text-black shadow-sm transition-transform hover:-translate-y-0.5">
+                    class="inline-flex items-center justify-center gap-2 rounded-full border border-black/10 bg-[var(--card-bg)] px-4 py-2 text-sm font-semibold text-black shadow-sm transition-transform hover:-translate-y-0.5">
                     <span>Learn More</span>
                 </a>
             </div>
             @php
-                // imágenes dentro de public/images: coloca 01.jpg, 02.jpg, 03.jpg
+                // imÃ¡genes dentro de public/images: coloca 01.jpg, 02.jpg, 03.jpg
                 $heroImages = [
                     'img/01.jpg',
                     'img/02.jpg',

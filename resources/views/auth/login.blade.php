@@ -1,22 +1,27 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+﻿<x-guest-layout>
+    <div class="mb-7">
+        <div class="ui-kicker">Acceso</div>
+        <h1 class="display-font mt-5 text-4xl leading-tight text-[var(--brand-green-dark)]">Iniciar sesion</h1>
+        <p class="mt-3 text-sm leading-relaxed text-[var(--muted)]">
+            Entra a tu cuenta para continuar con la gestion de clientes, facturas y pedidos.
+        </p>
+    </div>
 
-    <form method="POST" action="{{ route('login') }}">
+    <x-auth-session-status class="mb-5 rounded-2xl border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-900" :status="session('status')" />
+
+    <form method="POST" action="{{ route('login') }}" class="space-y-5">
         @csrf
 
-        <!-- Email Address -->
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <label for="email" class="text-sm font-bold text-[var(--brand-green-dark)]">Correo electronico</label>
+            <input id="email" class="ui-field mt-2 block w-full" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+        <div>
+            <label for="password" class="text-sm font-bold text-[var(--brand-green-dark)]">Contrasena</label>
 
-            <x-text-input id="password" class="block mt-1 w-full"
+            <input id="password" class="ui-field mt-2 block w-full"
                             type="password"
                             name="password"
                             required autocomplete="current-password" />
@@ -24,24 +29,27 @@
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
+        <div class="flex flex-wrap items-center justify-between gap-3">
             <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
+                <input id="remember_me" type="checkbox" class="rounded border-black/20 text-[var(--brand-green)] shadow-sm focus:ring-[var(--brand-green)]" name="remember">
+                <span class="ms-2 text-sm text-[var(--muted)]">Recordarme</span>
             </label>
-        </div>
 
-        <div class="flex items-center justify-end mt-4">
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
+                <a class="text-sm font-semibold text-[var(--brand-green-dark)] underline-offset-4 hover:underline" href="{{ route('password.request') }}">
+                    Olvide mi contrasena
                 </a>
             @endif
+        </div>
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
+        <div class="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between">
+            <a class="ui-button-secondary w-full sm:w-auto" href="{{ route('register') }}">
+                Crear cuenta
+            </a>
+
+            <button type="submit" class="ui-button-primary w-full sm:w-auto">
+                Entrar
+            </button>
         </div>
     </form>
 </x-guest-layout>

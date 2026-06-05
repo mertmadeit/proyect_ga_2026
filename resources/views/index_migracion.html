@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Virelle - Venta de plantas - Inicio</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --brand-green: #496b4c;
+      --brand-green-dark: #143b31;
+      --brand-sage: #dfe9d8;
+      --brand-sage-2: #eef4ea;
+      --brand-clay: #b87056;
+      --brand-ink: #0f1714;
+      --text: #121815;
+      --muted: #68746d;
+      --bg: #f4f6f0;
+      --card-bg: #ffffff;
+      --surface: #fbfcf8;
+      --border: rgba(15, 20, 18, 0.10);
+      --shadow-soft: 0 24px 70px rgba(25, 54, 42, 0.13);
+      --shadow-sm: 0 14px 34px rgba(25, 54, 42, 0.08);
+      --shadow-ring: 0 0 0 1px rgba(255,255,255,.7) inset;
+      --radius: 10px;
+      --max-width: 1100px;
+      --font-sans: 'Sora', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      --font-display: 'Playfair Display', 'Times New Roman', serif;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    html,body{font-family:var(--font-sans);background:var(--bg);color:var(--text);margin:0;padding:0}
+    body{
+      min-height:100vh;
+      background:
+        radial-gradient(740px circle at 5% -12%, rgba(73, 107, 76, 0.14), transparent 55%),
+        radial-gradient(660px circle at 105% 1%, rgba(184, 112, 86, 0.12), transparent 48%),
+        linear-gradient(180deg, #fbfcf8 0%, var(--bg) 48%, #edf3e8 100%);
+    }
+    a{color:inherit;text-decoration:none}
+    .display-font{font-family:var(--font-display);font-weight:600}
+    ::selection{background:var(--brand-sage);color:var(--brand-green-dark)}
+    .ui-shell{width:min(100%, 1240px);margin-inline:auto;padding-inline:clamp(1rem, 3vw, 2rem)}
+    .ui-button-primary,.ui-button-secondary,.ui-button-danger{
+      display:inline-flex;min-height:2.55rem;align-items:center;justify-content:center;gap:.5rem;border-radius:999px;
+      padding:.65rem 1rem;font-size:.875rem;font-weight:700;transition:transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+    }
+    .ui-button-primary{border:1px solid rgba(23,63,51,.18);background:linear-gradient(180deg, #225344 0%, var(--brand-green-dark) 100%);color:#fff;box-shadow:0 12px 28px rgba(23,63,51,.18)}
+    .ui-button-secondary{border:1px solid var(--border);background:linear-gradient(180deg, #fff 0%, #f8faf5 100%);color:var(--brand-green-dark)}
+    .ui-button-primary:hover,.ui-button-secondary:hover,.ui-button-danger:hover{transform:translateY(-1px);box-shadow:0 14px 30px rgba(23,63,51,.14)}
+    .ui-kicker{display:inline-flex;align-items:center;gap:.55rem;border:1px solid rgba(18,24,21,.1);border-radius:999px;background:#fff;color:var(--muted);padding:.42rem .75rem;font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+    .ui-kicker::before{content:"";width:.45rem;height:.45rem;border-radius:999px;background:var(--brand-clay)}
+    .ui-card{border:1px solid rgba(15,20,18,.08);border-radius:18px;background:#fff;box-shadow:var(--shadow-sm), var(--shadow-ring)}
+    .ui-chip{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;background:var(--brand-sage);color:var(--brand-green-dark);padding:.38rem .78rem;font-size:.86rem;font-weight:800}
+  </style>
+</head>
+<body class="m-0 bg-(--bg) text-(--text) antialiased">
+  <nav class="z-50 sticky top-4 w-full max-w-7xl mx-auto rounded-3xl border border-black/10 bg-white shadow-[var(--shadow-sm)]">
+    <div class="relative flex min-h-14 flex-wrap items-center gap-4 px-4 py-3 sm:min-h-16 sm:px-5">
+      <div class="flex items-center gap-3">
+        <div class="leading-tight">
+          <a href="/" class="text-lg font-semibold tracking-tight text-(--brand-green-dark)">Virelle</a>
+          <div class="text-xs text-(--muted)">Plantas & accesorios</div>
+        </div>
+      </div>
+      <ul class="order-3 flex basis-full items-center justify-between gap-3 border-t border-black/5 pt-3 text-xs font-medium sm:text-sm md:absolute md:left-1/2 md:basis-auto md:-translate-x-1/2 md:justify-center md:gap-10 md:border-0 md:pt-0">
+        <li class="flex-1 text-center md:flex-none">
+          <a class="block px-2 py-1.5 rounded-md text-(--muted) hover:text-(--brand-green-dark) hover:bg-(--brand-sage) transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--brand-green)" href="/">Home</a>
+        </li>
+        <li class="flex-1 text-center md:flex-none">
+          <a class="block px-2 py-1.5 rounded-md text-(--muted) hover:text-(--brand-green-dark) hover:bg-(--brand-sage) transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--brand-green)" href="#contact">Contact</a>
+        </li>
+      </ul>
+      <div class="ml-auto flex shrink-0 items-center gap-2">
+        <a class="inline-flex items-center justify-center gap-2 rounded-full border border-black/10 bg-(--card-bg) px-4 py-2 text-sm font-semibold text-(--brand-green-dark) shadow-sm transition-transform hover:-translate-y-0.5 hover:bg-(--brand-sage)" href="./register">
+          <span>Registrarse</span>
+        </a>
+        <a class="inline-flex items-center justify-center gap-2 rounded-full bg-(--brand-sage) px-4 py-2 text-sm font-bold text-(--brand-green-dark) transition hover:bg-white" href="./login">
+          <span>Iniciar sesión</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="ui-shell py-8 sm:py-12">
+    <section class="relative overflow-hidden rounded-[28px] border border-black/5 bg-white shadow-[var(--shadow-soft)]">
+      <div class="absolute inset-x-0 top-0 h-24 bg-[linear-gradient(90deg,rgba(223,233,216,.75),rgba(255,255,255,.35),rgba(184,112,86,.16))]"></div>
+      <div class="relative grid gap-10 p-5 sm:p-8 lg:grid-cols-[1.02fr_.98fr] lg:p-10">
+        <div class="flex min-h-[620px] flex-col justify-center py-8 lg:py-12">
+          <span class="ui-kicker">Virelle Atelier</span>
+          <h1 class="display-font mt-7 max-w-3xl text-5xl leading-[.98] text-(--brand-ink) sm:text-6xl lg:text-7xl">Plantas listas para elevar cualquier espacio.</h1>
+          <p class="mt-6 max-w-2xl text-base leading-8 text-(--muted) sm:text-lg">Una tienda vegetal con catalogo claro, cuidado simple y gestion de clientes y facturas en una experiencia mas ordenada.</p>
+          <div class="mt-9 flex flex-wrap gap-3">
+            <a href="#destacados" class="ui-button-primary">Ver coleccion</a>
+            <a href="/facturas/create" class="ui-button-secondary">Registrar venta</a>
+          </div>
+          <div class="mt-12 grid max-w-2xl gap-3 sm:grid-cols-3">
+            <div class="ui-card p-5">
+              <p class="text-2xl font-extrabold text-(--brand-green-dark)">38+</p>
+              <p class="mt-1 text-xs leading-5 text-(--muted)">Variedades listas para venta</p>
+            </div>
+            <div class="ui-card p-5">
+              <p class="text-2xl font-extrabold text-(--brand-green-dark)">24h</p>
+              <p class="mt-1 text-xs leading-5 text-(--muted)">Respuesta comercial</p>
+            </div>
+            <div class="ui-card p-5">
+              <p class="text-2xl font-extrabold text-(--brand-green-dark)">4.9</p>
+              <p class="mt-1 text-xs leading-5 text-(--muted)">Satisfaccion promedio</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid min-h-[620px] gap-4 lg:grid-rows-[1fr_auto]">
+          <div class="relative overflow-hidden rounded-[24px] bg-(--brand-green-dark)">
+            <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1400&q=82" alt="Interior con plantas Virelle" class="absolute inset-0 h-full w-full object-cover opacity-95" />
+            <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,23,20,0)_35%,rgba(15,23,20,.55)_100%)]"></div>
+            <div class="absolute left-5 right-5 bottom-5 rounded-[20px] border border-white/20 bg-white/88 p-5 shadow-[0_20px_55px_rgba(0,0,0,.16)] backdrop-blur">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-(--muted)">Seleccion 2026</p>
+                  <h2 class="mt-2 text-xl font-extrabold text-(--brand-green-dark)">Interior resistente</h2>
+                </div>
+                <span class="ui-chip">$22+</span>
+              </div>
+              <p class="mt-3 text-sm leading-6 text-(--muted)">Piezas pensadas para luz indirecta, bajo mantenimiento y espacios modernos.</p>
+            </div>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <a href="/clientes" class="ui-card group block p-5 transition hover:-translate-y-0.5">
+              <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-(--muted)">Operacion</p>
+              <div class="mt-3 flex items-center justify-between gap-4">
+                <h3 class="text-lg font-extrabold">Clientes</h3>
+                <span class="ui-chip">Abrir</span>
+              </div>
+            </a>
+            <a href="/facturas" class="ui-card group block p-5 transition hover:-translate-y-0.5">
+              <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-(--muted)">Control</p>
+              <div class="mt-3 flex items-center justify-between gap-4">
+                <h3 class="text-lg font-extrabold">Facturas</h3>
+                <span class="ui-chip">Abrir</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-12 grid gap-5 sm:grid-cols-3" aria-label="Beneficios">
+      <article class="ui-card p-6">
+        <span class="ui-chip">01</span>
+        <h2 class="mt-5 text-lg font-extrabold">Catalogo limpio</h2>
+        <p class="mt-2 text-sm leading-6 text-(--muted)">Productos faciles de explorar, con precio y atributos visibles al instante.</p>
+      </article>
+      <article class="ui-card p-6">
+        <span class="ui-chip">02</span>
+        <h2 class="mt-5 text-lg font-extrabold">Gestion rapida</h2>
+        <p class="mt-2 text-sm leading-6 text-(--muted)">Accesos directos a clientes, perfiles y facturas sin perder contexto.</p>
+      </article>
+      <article class="ui-card p-6">
+        <span class="ui-chip">03</span>
+        <h2 class="mt-5 text-lg font-extrabold">Cuidado claro</h2>
+        <p class="mt-2 text-sm leading-6 text-(--muted)">Recomendaciones sencillas para que cada planta llegue y permanezca bien.</p>
+      </article>
+    </section>
+
+    <section id="destacados" class="mt-16">
+      <div class="flex flex-wrap items-end justify-between gap-5">
+        <div>
+          <span class="ui-kicker">Coleccion</span>
+          <h2 class="display-font mt-3 text-4xl text-(--brand-ink)">Destacados curados</h2>
+          <p class="mt-2 text-sm text-(--muted)">Piezas faciles de cuidar y listas para vender.</p>
+        </div>
+        <a href="/clientes/create" class="ui-button-secondary">Nuevo cliente</a>
+      </div>
+
+      <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <article class="ui-card group overflow-hidden">
+          <div class="relative h-64 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1446071103084-c257b5f70672?auto=format&fit=crop&w=1200&q=82" alt="Monstera Deliciosa" class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" loading="lazy" />
+            <span class="ui-chip absolute right-4 top-4">$34.00</span>
+          </div>
+          <div class="p-6">
+            <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-(--muted)">Planta de interior</p>
+            <h3 class="mt-2 text-xl font-extrabold">Monstera Deliciosa</h3>
+            <p class="mt-2 text-sm text-(--muted)">Interior - Luz indirecta</p>
+            <a class="ui-button-secondary mt-6 w-full" href="/clientes/create">Consultar</a>
+          </div>
+        </article>
+
+        <article class="ui-card group overflow-hidden">
+          <div class="relative h-64 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=82" alt="Sansevieria" class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" loading="lazy" />
+            <span class="ui-chip absolute right-4 top-4">$22.00</span>
+          </div>
+          <div class="p-6">
+            <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-(--muted)">Planta de interior</p>
+            <h3 class="mt-2 text-xl font-extrabold">Sansevieria</h3>
+            <p class="mt-2 text-sm text-(--muted)">Muy resistente - Poco riego</p>
+            <a class="ui-button-secondary mt-6 w-full" href="/clientes/create">Consultar</a>
+          </div>
+        </article>
+
+        <article class="ui-card group overflow-hidden">
+          <div class="relative h-64 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1459666644539-a9755287d6b0?auto=format&fit=crop&w=1200&q=82" alt="Pilea Peperomioides" class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]" loading="lazy" />
+            <span class="ui-chip absolute right-4 top-4">$18.00</span>
+          </div>
+          <div class="p-6">
+            <p class="text-xs font-extrabold uppercase tracking-[0.16em] text-(--muted)">Planta de interior</p>
+            <h3 class="mt-2 text-xl font-extrabold">Pilea Peperomioides</h3>
+            <p class="mt-2 text-sm text-(--muted)">Compacta - Crecimiento rapido</p>
+            <a class="ui-button-secondary mt-6 w-full" href="/clientes/create">Consultar</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="cuidado" class="mt-16 overflow-hidden rounded-[28px] bg-(--brand-green-dark) text-white shadow-[var(--shadow-soft)]">
+      <div class="grid gap-8 p-6 sm:p-8 lg:grid-cols-[.85fr_1.15fr] lg:p-10">
+        <div>
+          <p class="text-xs font-extrabold uppercase tracking-[0.2em] text-white/60">Ritual</p>
+          <h2 class="display-font mt-3 text-4xl">Guia de cuidado</h2>
+          <p class="mt-4 text-sm leading-7 text-white/72">Tres reglas simples para plantas de interior, redactadas para vender mejor y cuidar sin complicaciones.</p>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-3">
+          <div class="rounded-[18px] border border-white/10 bg-white/8 p-5">
+            <span class="ui-chip">01</span>
+            <h3 class="mt-5 font-extrabold">Luz</h3>
+            <p class="mt-2 text-sm leading-6 text-white/72">Cerca de ventana, sin sol directo fuerte.</p>
+          </div>
+          <div class="rounded-[18px] border border-white/10 bg-white/8 p-5">
+            <span class="ui-chip">02</span>
+            <h3 class="mt-5 font-extrabold">Riego</h3>
+            <p class="mt-2 text-sm leading-6 text-white/72">Deja secar la capa superior antes de regar.</p>
+          </div>
+          <div class="rounded-[18px] border border-white/10 bg-white/8 p-5">
+            <span class="ui-chip">03</span>
+            <h3 class="mt-5 font-extrabold">Rutina</h3>
+            <p class="mt-2 text-sm leading-6 text-white/72">Revisa hojas y sustrato una vez por semana.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="ui-card mt-12 p-6 sm:p-8">
+      <div class="flex flex-wrap items-center justify-between gap-6">
+        <div>
+          <span class="ui-kicker">Atencion personal</span>
+          <h2 class="display-font mt-3 text-4xl">Te ayudamos a elegir.</h2>
+          <p class="mt-2 max-w-2xl text-sm leading-7 text-(--muted)">Cuentanos tu espacio, luz disponible y tamano ideal. Te recomendamos opciones concretas.</p>
+        </div>
+        <a class="ui-button-primary" href="mailto:contacto@virelle.com">Escribenos</a>
+      </div>
+    </section>
+  </main>
+
+  <footer role="contentinfo" class="mt-20 border-t border-black/5 bg-white/35">
+    <div class="ui-shell py-12 sm:py-16">
+      <div class="grid gap-10 lg:grid-cols-[1.2fr_0.8fr_1fr]">
+        <div>
+          <div class="text-lg font-bold text-(--brand-green-dark)">Virelle</div>
+          <p class="mt-2 max-w-sm text-sm leading-relaxed text-(--muted)">Plantas, accesorios y facturacion organizada para una operacion clara.</p>
+          <p class="mt-5 text-sm text-(--muted)">Contacto: <a class="font-bold text-(--brand-green-dark)" href="mailto:contacto@virelle.com">contacto@virelle.com</a></p>
+        </div>
+        <div>
+          <div class="text-xs font-bold uppercase tracking-[0.24em] text-(--muted)">Gestion</div>
+          <nav aria-label="Enlaces de pie de pagina" class="mt-4 grid gap-2">
+            <a href="/clientes" class="text-sm text-(--muted) hover:text-(--text)">Clientes</a>
+            <a href="/facturas" class="text-sm text-(--muted) hover:text-(--text)">Facturas</a>
+            <a href="/perfiles" class="text-sm text-(--muted) hover:text-(--text)">Perfiles</a>
+          </nav>
+        </div>
+        <div class="lg:text-right">
+          <div class="text-xs font-bold uppercase tracking-[0.24em] text-(--muted)">Tienda</div>
+          <div class="mt-4 flex flex-wrap gap-x-6 gap-y-2 lg:justify-end">
+            <a href="/#destacados" class="text-sm text-(--muted) hover:text-(--text)">Coleccion</a>
+            <a href="/#cuidado" class="text-sm text-(--muted) hover:text-(--text)">Guia</a>
+            <a href="/#contact" class="text-sm text-(--muted) hover:text-(--text)">Contacto</a>
+          </div>
+        </div>
+      </div>
+      <div class="mt-10 text-center text-xs uppercase tracking-[0.24em] text-(--muted)">
+        &copy; 2026 Virelle. Todos los derechos reservados.
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

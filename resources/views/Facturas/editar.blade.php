@@ -1,4 +1,4 @@
-@extends('master_nav')
+﻿@extends('master_nav')
 @section('title', 'Editar factura')
 
 @section('content')
@@ -25,27 +25,27 @@
 			{!! Form::model($factura, ['route' => ['facturas.update', $factura->id], 'method' => 'PUT']) !!}
 				<div class="grid gap-5 sm:grid-cols-2">
 					<div class="space-y-2">
-						<label for="valor" class="block text-sm font-bold text-(--text)">Valor</label>
+						<label for="valor" class="block text-sm font-bold text-[var(--text)]">Valor</label>
 						{!! Form::number('valor', null, ['id' => 'valor', 'class' => 'ui-field', 'required' => 'required', 'placeholder' => 'Valor de la factura']) !!}
 					</div>
 
 					<div class="space-y-2">
-						<label for="idcliente" class="block text-sm font-bold text-(--text)">Cliente</label>
+						<label for="idcliente" class="block text-sm font-bold text-[var(--text)]">Cliente</label>
 						{!! Form::select('idcliente', $clientes ?? [], null, ['id' => 'idcliente', 'class' => 'ui-field', 'required' => 'required']) !!}
 					</div>
 
 					<div class="space-y-2">
-						<label for="idforma" class="block text-sm font-bold text-(--text)">Forma de pago</label>
+						<label for="idforma" class="block text-sm font-bold text-[var(--text)]">Forma de pago</label>
 						{!! Form::select('idforma', $formas ?? [], null, ['id' => 'idforma', 'class' => 'ui-field', 'required' => 'required']) !!}
 					</div>
 
 					<div class="space-y-2">
-						<label for="idestado" class="block text-sm font-bold text-(--text)">Estado</label>
+						<label for="idestado" class="block text-sm font-bold text-[var(--text)]">Estado</label>
 						{!! Form::select('idestado', $estados ?? [], null, ['id' => 'idestado', 'class' => 'ui-field', 'required' => 'required']) !!}
 					</div>
 
 					<div class="space-y-2 sm:col-span-2">
-						<label for="detalles" class="block text-sm font-bold text-(--text)">Detalles</label>
+						<label for="detalles" class="block text-sm font-bold text-[var(--text)]">Detalles</label>
 						{!! Form::textarea('detalles', null, ['id' => 'detalles', 'rows' => 4, 'class' => 'ui-field', 'placeholder' => 'Detalles de la factura']) !!}
 					</div>
 				</div>

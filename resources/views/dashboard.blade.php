@@ -1,302 +1,219 @@
-<x-app-layout>
+﻿<x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">{{ __('Dashboard General') }}</h2>
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <h1 class="text-2xl font-extrabold tracking-tight text-[var(--brand-green-dark)]">Dashboard</h1>
+                <p class="mt-1 text-sm text-[var(--muted)]">Vista rapida de ventas, clientes e inventario.</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+                <a href="{{ route('clientes.create') }}" class="ui-button-secondary">Nuevo cliente</a>
+                <a href="{{ route('facturas.index') }}" class="ui-button-primary">Ver facturas</a>
+            </div>
+        </div>
     </x-slot>
 
-    <div class="py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <section class="mb-6 overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 p-6 text-white shadow-xl">
-                <p class="text-sm uppercase tracking-[0.2em] text-emerald-50/90">Panel de Control</p>
-                <h1 class="mt-2 text-3xl font-extrabold">Resumen Completo del Sistema</h1>
-                <p class="mt-2 text-emerald-50/95">Visualiza todas las tablas en un solo lugar y navega a cada modulo operativo.</p>
+    @php
+        $ticketPromedio = $stats['facturas'] > 0
+            ? $stats['facturacion_total'] / $stats['facturas']
+            : 0;
 
-                <div class="mt-5 flex flex-wrap gap-3">
-                    <a href="{{ route('perfiles.index') }}" class="rounded-lg bg-white/95 px-4 py-2 text-sm font-semibold text-emerald-700 hover:bg-white">Perfiles</a>
-                    <a href="{{ route('clientes.index') }}" class="rounded-lg bg-white/95 px-4 py-2 text-sm font-semibold text-emerald-700 hover:bg-white">Clientes</a>
-                    <a href="{{ route('facturas.index') }}" class="rounded-lg bg-white/95 px-4 py-2 text-sm font-semibold text-emerald-700 hover:bg-white">Facturas</a>
-                    <a href="{{ route('facturas.reporte') }}" class="rounded-lg border border-white/80 bg-white/20 px-4 py-2 text-sm font-semibold text-white hover:bg-white/30">Descargar Reporte PDF</a>
+        $topMetrics = [
+            ['label' => 'Facturacion', 'value' => '$' . number_format($stats['facturacion_total'], 2), 'meta' => 'total acumulado'],
+            ['label' => 'Ticket promedio', 'value' => '$' . number_format($ticketPromedio, 2), 'meta' => 'por factura'],
+            ['label' => 'Clientes', 'value' => number_format($stats['clientes']), 'meta' => 'registrados'],
+            ['label' => 'Inventario', 'value' => number_format($stats['inventario_total']), 'meta' => 'unidades'],
+        ];
+
+        $systemMetrics = [
+            ['label' => 'Usuarios', 'value' => $stats['usuarios']],
+            ['label' => 'Perfiles', 'value' => $stats['perfiles']],
+            ['label' => 'Productos', 'value' => $stats['productos']],
+            ['label' => 'Pedidos', 'value' => $stats['pedidos']],
+            ['label' => 'Formas de pago', 'value' => $stats['formas_pago']],
+            ['label' => 'Estados factura', 'value' => $stats['estados_factura']],
+        ];
+    @endphp
+
+    <section class="grid gap-3 md:grid-cols-4">
+        @foreach ($topMetrics as $metric)
+            <article class="ui-metric">
+                <p class="text-xs font-extrabold uppercase tracking-[0.08em] text-[var(--muted)]">{{ $metric['label'] }}</p>
+                <strong class="mt-3 block text-2xl font-extrabold">{{ $metric['value'] }}</strong>
+                <p class="mt-1 text-xs font-semibold text-[var(--muted)]">{{ $metric['meta'] }}</p>
+            </article>
+        @endforeach
+    </section>
+
+    <section class="mt-5 grid gap-5 xl:grid-cols-[1.05fr_.95fr]">
+        <div class="ui-panel p-5">
+            <div class="flex items-center justify-between gap-4 border-b border-black/5 pb-4">
+                <div>
+                    <h2 class="text-base font-extrabold text-[var(--brand-green-dark)]">Operacion</h2>
+                    <p class="mt-1 text-sm text-[var(--muted)]">Accesos frecuentes para el dia a dia.</p>
                 </div>
-            </section>
+                <a href="{{ route('facturas.reporte') }}" class="ui-button-secondary">Reporte PDF</a>
+            </div>
 
-            <section class="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                <article class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                    <p class="text-xs font-bold uppercase tracking-[0.16em] text-gray-500">Perfiles</p>
-                    <p class="mt-2 text-3xl font-extrabold text-emerald-700 dark:text-emerald-400">{{ $stats['perfiles'] }}</p>
-                </article>
-                <article class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                    <p class="text-xs font-bold uppercase tracking-[0.16em] text-gray-500">Usuarios</p>
-                    <p class="mt-2 text-3xl font-extrabold text-sky-700 dark:text-sky-400">{{ $stats['usuarios'] }}</p>
-                </article>
-                <article class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                    <p class="text-xs font-bold uppercase tracking-[0.16em] text-gray-500">Clientes</p>
-                    <p class="mt-2 text-3xl font-extrabold text-indigo-700 dark:text-indigo-400">{{ $stats['clientes'] }}</p>
-                </article>
-                <article class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                    <p class="text-xs font-bold uppercase tracking-[0.16em] text-gray-500">Facturas</p>
-                    <p class="mt-2 text-3xl font-extrabold text-fuchsia-700 dark:text-fuchsia-400">{{ $stats['facturas'] }}</p>
-                </article>
-                <article class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                    <p class="text-xs font-bold uppercase tracking-[0.16em] text-gray-500">Formas de Pago</p>
-                    <p class="mt-2 text-3xl font-extrabold text-amber-700 dark:text-amber-400">{{ $stats['formas_pago'] }}</p>
-                </article>
-                <article class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                    <p class="text-xs font-bold uppercase tracking-[0.16em] text-gray-500">Estados Factura</p>
-                    <p class="mt-2 text-3xl font-extrabold text-lime-700 dark:text-lime-400">{{ $stats['estados_factura'] }}</p>
-                </article>
-                <article class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                    <p class="text-xs font-bold uppercase tracking-[0.16em] text-gray-500">Productos</p>
-                    <p class="mt-2 text-3xl font-extrabold text-violet-700 dark:text-violet-400">{{ $stats['productos'] }}</p>
-                </article>
-                <article class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                    <p class="text-xs font-bold uppercase tracking-[0.16em] text-gray-500">Pedidos</p>
-                    <p class="mt-2 text-3xl font-extrabold text-rose-700 dark:text-rose-400">{{ $stats['pedidos'] }}</p>
-                </article>
-            </section>
-
-            <section class="mb-8 grid gap-4 md:grid-cols-3">
-                <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                    <p class="text-xs font-bold uppercase tracking-[0.16em] text-gray-500">Facturacion Acumulada</p>
-                    <p class="mt-2 text-2xl font-extrabold text-emerald-700 dark:text-emerald-400">${{ number_format($stats['facturacion_total'], 2) }}</p>
-                </div>
-                <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                    <p class="text-xs font-bold uppercase tracking-[0.16em] text-gray-500">Inventario Total</p>
-                    <p class="mt-2 text-2xl font-extrabold text-indigo-700 dark:text-indigo-400">{{ number_format($stats['inventario_total']) }} unidades</p>
-                </div>
-                <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                    <p class="text-xs font-bold uppercase tracking-[0.16em] text-gray-500">Monto Total Pedidos</p>
-                    <p class="mt-2 text-2xl font-extrabold text-rose-700 dark:text-rose-400">${{ number_format($stats['monto_pedidos'], 2) }}</p>
-                </div>
-            </section>
-
-            <section class="space-y-6">
-                <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100">Tabla: perfiles</h3>
-                    <div class="mt-4 overflow-x-auto">
-                        <table class="min-w-full text-sm">
-                            <thead>
-                                <tr class="border-b border-gray-200 text-left text-xs uppercase tracking-[0.14em] text-gray-500 dark:border-gray-700">
-                                    <th class="px-3 py-2">ID</th>
-                                    <th class="px-3 py-2">Nombre</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-gray-700 dark:text-gray-200">
-                                @forelse ($tablas['perfiles'] as $perfil)
-                                    <tr class="border-b border-gray-100 dark:border-gray-700/50">
-                                        <td class="px-3 py-2">{{ $perfil->id }}</td>
-                                        <td class="px-3 py-2">{{ $perfil->nombre }}</td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="2" class="px-3 py-3 text-gray-500">Sin datos.</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="grid gap-6 xl:grid-cols-2">
-                    <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100">Tabla: users</h3>
-                        <div class="mt-4 overflow-x-auto">
-                            <table class="min-w-full text-sm">
-                                <thead>
-                                    <tr class="border-b border-gray-200 text-left text-xs uppercase tracking-[0.14em] text-gray-500 dark:border-gray-700">
-                                        <th class="px-3 py-2">Usuario</th>
-                                        <th class="px-3 py-2">Email</th>
-                                        <th class="px-3 py-2">Perfil</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="text-gray-700 dark:text-gray-200">
-                                    @forelse ($tablas['usuarios'] as $usuario)
-                                        <tr class="border-b border-gray-100 dark:border-gray-700/50">
-                                            <td class="px-3 py-2 font-semibold">{{ $usuario->name }}</td>
-                                            <td class="px-3 py-2">{{ $usuario->email }}</td>
-                                            <td class="px-3 py-2">{{ $usuario->perfil?->nombre ?? '-' }}</td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="3" class="px-3 py-3 text-gray-500">Sin datos.</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100">Tabla: clientes</h3>
-                        <div class="mt-4 overflow-x-auto">
-                            <table class="min-w-full text-sm">
-                                <thead>
-                                    <tr class="border-b border-gray-200 text-left text-xs uppercase tracking-[0.14em] text-gray-500 dark:border-gray-700">
-                                        <th class="px-3 py-2">Nombre</th>
-                                        <th class="px-3 py-2">RFC</th>
-                                        <th class="px-3 py-2">Telefono</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="text-gray-700 dark:text-gray-200">
-                                    @forelse ($tablas['clientes'] as $cliente)
-                                        <tr class="border-b border-gray-100 dark:border-gray-700/50">
-                                            <td class="px-3 py-2 font-semibold">{{ $cliente->nombre }}</td>
-                                            <td class="px-3 py-2">{{ $cliente->rfc }}</td>
-                                            <td class="px-3 py-2">{{ $cliente->telefono }}</td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="3" class="px-3 py-3 text-gray-500">Sin datos.</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid gap-6 xl:grid-cols-2">
-                    <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100">Tabla: formaspago</h3>
-                        <div class="mt-4 overflow-x-auto">
-                            <table class="min-w-full text-sm">
-                                <thead>
-                                    <tr class="border-b border-gray-200 text-left text-xs uppercase tracking-[0.14em] text-gray-500 dark:border-gray-700">
-                                        <th class="px-3 py-2">ID</th>
-                                        <th class="px-3 py-2">Nombre</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="text-gray-700 dark:text-gray-200">
-                                    @forelse ($tablas['formas_pago'] as $forma)
-                                        <tr class="border-b border-gray-100 dark:border-gray-700/50">
-                                            <td class="px-3 py-2">{{ $forma->id }}</td>
-                                            <td class="px-3 py-2">{{ $forma->nombre }}</td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="2" class="px-3 py-3 text-gray-500">Sin datos.</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100">Tabla: estadosfacturas</h3>
-                        <div class="mt-4 overflow-x-auto">
-                            <table class="min-w-full text-sm">
-                                <thead>
-                                    <tr class="border-b border-gray-200 text-left text-xs uppercase tracking-[0.14em] text-gray-500 dark:border-gray-700">
-                                        <th class="px-3 py-2">ID</th>
-                                        <th class="px-3 py-2">Estado</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="text-gray-700 dark:text-gray-200">
-                                    @forelse ($tablas['estados_factura'] as $estado)
-                                        <tr class="border-b border-gray-100 dark:border-gray-700/50">
-                                            <td class="px-3 py-2">{{ $estado->id }}</td>
-                                            <td class="px-3 py-2">{{ $estado->estado }}</td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="2" class="px-3 py-3 text-gray-500">Sin datos.</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100">Tabla: facturas</h3>
-                    <div class="mt-4 overflow-x-auto">
-                        <table class="min-w-full text-sm">
-                            <thead>
-                                <tr class="border-b border-gray-200 text-left text-xs uppercase tracking-[0.14em] text-gray-500 dark:border-gray-700">
-                                    <th class="px-3 py-2">Numero</th>
-                                    <th class="px-3 py-2">Cliente</th>
-                                    <th class="px-3 py-2">Forma Pago</th>
-                                    <th class="px-3 py-2">Estado</th>
-                                    <th class="px-3 py-2">Valor</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-gray-700 dark:text-gray-200">
-                                @forelse ($tablas['facturas'] as $factura)
-                                    <tr class="border-b border-gray-100 dark:border-gray-700/50">
-                                        <td class="px-3 py-2 font-semibold">#{{ $factura->numero }}</td>
-                                        <td class="px-3 py-2">{{ $factura->cliente?->nombre ?? '-' }}</td>
-                                        <td class="px-3 py-2">{{ $factura->forma?->nombre ?? '-' }}</td>
-                                        <td class="px-3 py-2">{{ $factura->estado?->estado ?? '-' }}</td>
-                                        <td class="px-3 py-2">${{ number_format((float) $factura->valor, 2) }}</td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="5" class="px-3 py-3 text-gray-500">Sin datos.</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="grid gap-6 xl:grid-cols-2">
-                    <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100">Tabla: productos</h3>
-                        <div class="mt-4 overflow-x-auto">
-                            <table class="min-w-full text-sm">
-                                <thead>
-                                    <tr class="border-b border-gray-200 text-left text-xs uppercase tracking-[0.14em] text-gray-500 dark:border-gray-700">
-                                        <th class="px-3 py-2">Nombre</th>
-                                        <th class="px-3 py-2">Precio</th>
-                                        <th class="px-3 py-2">Cantidad</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="text-gray-700 dark:text-gray-200">
-                                    @forelse ($tablas['productos'] as $producto)
-                                        <tr class="border-b border-gray-100 dark:border-gray-700/50">
-                                            <td class="px-3 py-2 font-semibold">{{ $producto->nombre }}</td>
-                                            <td class="px-3 py-2">${{ number_format((float) $producto->precio, 2) }}</td>
-                                            <td class="px-3 py-2">{{ $producto->cantidad }}</td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="3" class="px-3 py-3 text-gray-500">Sin datos.</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100">Tabla: pedidos</h3>
-                        <div class="mt-4 overflow-x-auto">
-                            <table class="min-w-full text-sm">
-                                <thead>
-                                    <tr class="border-b border-gray-200 text-left text-xs uppercase tracking-[0.14em] text-gray-500 dark:border-gray-700">
-                                        <th class="px-3 py-2">Nombre</th>
-                                        <th class="px-3 py-2">Cantidad</th>
-                                        <th class="px-3 py-2">Precio</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="text-gray-700 dark:text-gray-200">
-                                    @forelse ($tablas['pedidos'] as $pedido)
-                                        <tr class="border-b border-gray-100 dark:border-gray-700/50">
-                                            <td class="px-3 py-2 font-semibold">{{ $pedido->nombre }}</td>
-                                            <td class="px-3 py-2">{{ $pedido->cantidad }}</td>
-                                            <td class="px-3 py-2">${{ number_format((float) $pedido->precio, 2) }}</td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="3" class="px-3 py-3 text-gray-500">Sin datos.</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <div class="mt-4 grid gap-3 sm:grid-cols-3">
+                <a href="{{ route('clientes.index') }}" class="block rounded-[8px] border border-black/10 bg-white px-4 py-4 transition hover:bg-[var(--surface)]">
+                    <p class="text-xs font-extrabold uppercase tracking-[0.08em] text-[var(--muted)]">01</p>
+                    <p class="mt-2 font-extrabold text-[var(--brand-green-dark)]">Clientes</p>
+                    <p class="mt-1 text-sm text-[var(--muted)]">Alta y consulta.</p>
+                </a>
+                <a href="{{ route('facturas.index') }}" class="block rounded-[8px] border border-black/10 bg-white px-4 py-4 transition hover:bg-[var(--surface)]">
+                    <p class="text-xs font-extrabold uppercase tracking-[0.08em] text-[var(--muted)]">02</p>
+                    <p class="mt-2 font-extrabold text-[var(--brand-green-dark)]">Facturas</p>
+                    <p class="mt-1 text-sm text-[var(--muted)]">Montos y PDFs.</p>
+                </a>
+                <a href="{{ route('perfiles.index') }}" class="block rounded-[8px] border border-black/10 bg-white px-4 py-4 transition hover:bg-[var(--surface)]">
+                    <p class="text-xs font-extrabold uppercase tracking-[0.08em] text-[var(--muted)]">03</p>
+                    <p class="mt-2 font-extrabold text-[var(--brand-green-dark)]">Perfiles</p>
+                    <p class="mt-1 text-sm text-[var(--muted)]">Roles de usuario.</p>
+                </a>
+            </div>
         </div>
-    </div>
+
+        <div class="ui-panel p-5">
+            <div class="border-b border-black/5 pb-4">
+                <h2 class="text-base font-extrabold text-[var(--brand-green-dark)]">Sistema</h2>
+                <p class="mt-1 text-sm text-[var(--muted)]">Conteo general por modulo.</p>
+            </div>
+            <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                @foreach ($systemMetrics as $metric)
+                    <div class="rounded-[8px] border border-black/10 bg-white px-4 py-3">
+                        <p class="text-xs font-bold text-[var(--muted)]">{{ $metric['label'] }}</p>
+                        <p class="mt-1 text-xl font-extrabold text-[var(--brand-green-dark)]">{{ $metric['value'] }}</p>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <section class="mt-5 grid gap-5 xl:grid-cols-[1.15fr_.85fr]">
+        <div class="ui-panel overflow-hidden">
+            <div class="flex items-center justify-between gap-4 border-b border-black/5 px-5 py-4">
+                <div>
+                    <h2 class="text-base font-extrabold text-[var(--brand-green-dark)]">Facturas recientes</h2>
+                    <p class="mt-1 text-xs text-[var(--muted)]">Ultimos documentos registrados.</p>
+                </div>
+                <a href="{{ route('facturas.index') }}" class="text-sm font-extrabold text-[var(--brand-green-dark)]">Abrir</a>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="ui-table min-w-full divide-y divide-black/5">
+                    <thead class="bg-[var(--surface)]">
+                        <tr>
+                            <th class="px-5 py-3 text-left text-xs font-extrabold uppercase tracking-[0.08em] text-[var(--muted)]">No.</th>
+                            <th class="px-5 py-3 text-left text-xs font-extrabold uppercase tracking-[0.08em] text-[var(--muted)]">Cliente</th>
+                            <th class="px-5 py-3 text-left text-xs font-extrabold uppercase tracking-[0.08em] text-[var(--muted)]">Forma</th>
+                            <th class="px-5 py-3 text-left text-xs font-extrabold uppercase tracking-[0.08em] text-[var(--muted)]">Estado</th>
+                            <th class="px-5 py-3 text-right text-xs font-extrabold uppercase tracking-[0.08em] text-[var(--muted)]">Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-black/5 bg-white">
+                        @forelse ($tablas['facturas'] as $factura)
+                            <tr>
+                                <td class="px-5 py-3 text-sm font-bold">#{{ $factura->numero }}</td>
+                                <td class="px-5 py-3 text-sm text-[var(--muted)]">{{ $factura->cliente?->nombre ?? '-' }}</td>
+                                <td class="px-5 py-3 text-sm text-[var(--muted)]">{{ $factura->forma?->nombre ?? '-' }}</td>
+                                <td class="px-5 py-3 text-sm text-[var(--muted)]">{{ $factura->estado?->estado ?? '-' }}</td>
+                                <td class="px-5 py-3 text-right text-sm font-extrabold text-[var(--brand-green-dark)]">${{ number_format((float) $factura->valor, 2) }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="ui-empty px-5 py-10 text-center text-sm text-[var(--muted)]">Sin facturas registradas.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="ui-panel overflow-hidden">
+            <div class="flex items-center justify-between gap-4 border-b border-black/5 px-5 py-4">
+                <div>
+                    <h2 class="text-base font-extrabold text-[var(--brand-green-dark)]">Clientes recientes</h2>
+                    <p class="mt-1 text-xs text-[var(--muted)]">Contactos mas nuevos.</p>
+                </div>
+                <a href="{{ route('clientes.index') }}" class="text-sm font-extrabold text-[var(--brand-green-dark)]">Abrir</a>
+            </div>
+            <div class="divide-y divide-black/5 bg-white">
+                @forelse ($tablas['clientes'] as $cliente)
+                    <div class="px-5 py-4">
+                        <div class="flex items-start justify-between gap-4">
+                            <div>
+                                <p class="text-sm font-extrabold text-[var(--text)]">{{ $cliente->nombre }}</p>
+                                <p class="mt-1 text-xs text-[var(--muted)]">{{ $cliente->email }}</p>
+                            </div>
+                            <span class="ui-chip">{{ $cliente->rfc }}</span>
+                        </div>
+                        <p class="mt-2 text-sm text-[var(--muted)]">{{ $cliente->telefono }}</p>
+                    </div>
+                @empty
+                    <div class="ui-empty px-5 py-10 text-center text-sm text-[var(--muted)]">Sin clientes registrados.</div>
+                @endforelse
+            </div>
+        </div>
+    </section>
+
+    <section class="mt-5 grid gap-5 xl:grid-cols-2">
+        <div class="ui-panel overflow-hidden">
+            <div class="border-b border-black/5 px-5 py-4">
+                <h2 class="text-base font-extrabold text-[var(--brand-green-dark)]">Inventario</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="ui-table min-w-full divide-y divide-black/5">
+                    <thead class="bg-[var(--surface)]">
+                        <tr>
+                            <th class="px-5 py-3 text-left text-xs font-extrabold uppercase tracking-[0.08em] text-[var(--muted)]">Producto</th>
+                            <th class="px-5 py-3 text-right text-xs font-extrabold uppercase tracking-[0.08em] text-[var(--muted)]">Precio</th>
+                            <th class="px-5 py-3 text-right text-xs font-extrabold uppercase tracking-[0.08em] text-[var(--muted)]">Stock</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-black/5 bg-white">
+                        @forelse ($tablas['productos'] as $producto)
+                            <tr>
+                                <td class="px-5 py-3 text-sm font-bold">{{ $producto->nombre }}</td>
+                                <td class="px-5 py-3 text-right text-sm text-[var(--muted)]">${{ number_format((float) $producto->precio, 2) }}</td>
+                                <td class="px-5 py-3 text-right text-sm font-bold text-[var(--brand-green-dark)]">{{ $producto->cantidad }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="3" class="ui-empty px-5 py-10 text-center text-sm text-[var(--muted)]">Sin productos registrados.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="ui-panel overflow-hidden">
+            <div class="border-b border-black/5 px-5 py-4">
+                <h2 class="text-base font-extrabold text-[var(--brand-green-dark)]">Pedidos recientes</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="ui-table min-w-full divide-y divide-black/5">
+                    <thead class="bg-[var(--surface)]">
+                        <tr>
+                            <th class="px-5 py-3 text-left text-xs font-extrabold uppercase tracking-[0.08em] text-[var(--muted)]">Pedido</th>
+                            <th class="px-5 py-3 text-right text-xs font-extrabold uppercase tracking-[0.08em] text-[var(--muted)]">Cantidad</th>
+                            <th class="px-5 py-3 text-right text-xs font-extrabold uppercase tracking-[0.08em] text-[var(--muted)]">Monto</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-black/5 bg-white">
+                        @forelse ($tablas['pedidos'] as $pedido)
+                            <tr>
+                                <td class="px-5 py-3 text-sm font-bold">{{ $pedido->nombre }}</td>
+                                <td class="px-5 py-3 text-right text-sm text-[var(--muted)]">{{ $pedido->cantidad }}</td>
+                                <td class="px-5 py-3 text-right text-sm font-bold text-[var(--brand-green-dark)]">${{ number_format((float) $pedido->precio, 2) }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="3" class="ui-empty px-5 py-10 text-center text-sm text-[var(--muted)]">Sin pedidos registrados.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
 </x-app-layout>

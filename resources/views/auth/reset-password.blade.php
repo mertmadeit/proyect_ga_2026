@@ -1,39 +1,43 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('password.store') }}">
+﻿<x-guest-layout>
+    <div class="mb-7">
+        <div class="ui-kicker">Nueva clave</div>
+        <h1 class="display-font mt-5 text-4xl leading-tight text-[var(--brand-green-dark)]">Actualizar contrasena</h1>
+        <p class="mt-3 text-sm leading-relaxed text-[var(--muted)]">
+            Define una nueva contrasena para volver a entrar al panel de Virelle.
+        </p>
+    </div>
+
+    <form method="POST" action="{{ route('password.store') }}" class="space-y-5">
         @csrf
 
-        <!-- Password Reset Token -->
         <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
-        <!-- Email Address -->
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
+            <label for="email" class="text-sm font-bold text-[var(--brand-green-dark)]">Correo electronico</label>
+            <input id="email" class="ui-field mt-2 block w-full" type="email" name="email" value="{{ old('email', $request->email) }}" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+        <div>
+            <label for="password" class="text-sm font-bold text-[var(--brand-green-dark)]">Nueva contrasena</label>
+            <input id="password" class="ui-field mt-2 block w-full" type="password" name="password" required autocomplete="new-password" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+        <div>
+            <label for="password_confirmation" class="text-sm font-bold text-[var(--brand-green-dark)]">Confirmar contrasena</label>
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
+            <input id="password_confirmation" class="ui-field mt-2 block w-full"
                                 type="password"
                                 name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Reset Password') }}
-            </x-primary-button>
+        <div class="flex justify-end pt-2">
+            <button type="submit" class="ui-button-primary w-full sm:w-auto">
+                Guardar contrasena
+            </button>
         </div>
     </form>
 </x-guest-layout>

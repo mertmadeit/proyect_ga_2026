@@ -1,29 +1,24 @@
-<x-app-layout>
+﻿<x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Profile') }}
-        </h2>
+        <div>
+            <p class="text-xs font-extrabold uppercase tracking-[0.08em] text-[var(--muted)]">Cuenta</p>
+            <h1 class="display-font mt-2 text-4xl text-[var(--brand-green-dark)]">Perfil</h1>
+        </div>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
+    <div class="grid gap-6 lg:grid-cols-[1fr_.82fr]">
+        <div class="space-y-6">
+            <div class="ui-panel p-6 sm:p-8">
+                @include('profile.partials.update-profile-information-form')
             </div>
 
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
-
-            <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
+            <div class="ui-panel p-6 sm:p-8">
+                @include('profile.partials.update-password-form')
             </div>
         </div>
+
+        <aside class="ui-panel h-fit p-6 sm:p-8">
+            @include('profile.partials.delete-user-form')
+        </aside>
     </div>
 </x-app-layout>

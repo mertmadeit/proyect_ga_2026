@@ -17,7 +17,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('clientes', ClientesController::class);
     Route::get('facturas/reporte/pdf', [PdfController::class, 'facturas'])
         ->name('facturas.reporte');
-    Route::resource('facturas', FacturasController::class);
+    Route::resource('facturas', FacturasController::class)
+        ->only(['index', 'show']);
+    Route::resource('facturas', FacturasController::class)
+        ->except(['index', 'show'])
+        ->middleware('admin');
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])

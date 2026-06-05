@@ -1,4 +1,4 @@
-@extends('master_nav')
+﻿@extends('master_nav')
 @section('title', 'Crear cliente')
 
 @section('content')
@@ -25,27 +25,27 @@
 			{!! Form::open(['route' => 'clientes.store']) !!}
 				<div class="grid gap-5 sm:grid-cols-2">
 					<div class="space-y-2 sm:col-span-2">
-						<label for="nombre" class="block text-sm font-bold text-(--text)">Nombre</label>
+						<label for="nombre" class="block text-sm font-bold text-[var(--text)]">Nombre</label>
 						{!! Form::text('nombre', null, ['id' => 'nombre', 'class' => 'ui-field', 'required' => 'required', 'placeholder' => 'Ej. Juan Perez']) !!}
 					</div>
 
 					<div class="space-y-2">
-						<label for="rfc" class="block text-sm font-bold text-(--text)">RFC</label>
+						<label for="rfc" class="block text-sm font-bold text-[var(--text)]">RFC</label>
 						{!! Form::text('rfc', null, ['id' => 'rfc', 'class' => 'ui-field', 'required' => 'required', 'placeholder' => 'Ej. ABCD010203XYZ']) !!}
 					</div>
 
 					<div class="space-y-2">
-						<label for="telefono" class="block text-sm font-bold text-(--text)">Telefono</label>
+						<label for="telefono" class="block text-sm font-bold text-[var(--text)]">Telefono</label>
 						{!! Form::text('telefono', null, ['id' => 'telefono', 'class' => 'ui-field', 'required' => 'required', 'placeholder' => 'Ej. 5512345678']) !!}
 					</div>
 
 					<div class="space-y-2 sm:col-span-2">
-						<label for="direccion" class="block text-sm font-bold text-(--text)">Direccion</label>
+						<label for="direccion" class="block text-sm font-bold text-[var(--text)]">Direccion</label>
 						{!! Form::text('direccion', null, ['id' => 'direccion', 'class' => 'ui-field', 'required' => 'required', 'placeholder' => 'Ej. Calle 123, Col. Centro']) !!}
 					</div>
 
 					<div class="space-y-2 sm:col-span-2">
-						<label for="email" class="block text-sm font-bold text-(--text)">Email</label>
+						<label for="email" class="block text-sm font-bold text-[var(--text)]">Email</label>
 						{!! Form::email('email', null, ['id' => 'email', 'class' => 'ui-field', 'required' => 'required', 'placeholder' => 'Ej. cliente@correo.com']) !!}
 					</div>
 				</div>

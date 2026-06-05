@@ -1,4 +1,4 @@
-@extends('master_nav')
+﻿@extends('master_nav')
 @section('title', 'Crear perfil')
 
 @section('content')
@@ -24,7 +24,7 @@
 
 			{!! Form::open(['route' => 'perfiles.store']) !!}
 				<div class="space-y-2">
-					<label for="nombre" class="block text-sm font-bold text-(--text)">Nombre del perfil</label>
+					<label for="nombre" class="block text-sm font-bold text-[var(--text)]">Nombre del perfil</label>
 					{!! Form::text('nombre', null, ['id' => 'nombre', 'class' => 'ui-field', 'required' => 'required', 'placeholder' => 'Ej. Administrador']) !!}
 				</div>
 

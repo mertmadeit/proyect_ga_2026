@@ -1,4 +1,4 @@
-@php
+﻿@php
     $mensajeInfo = session('mensaje');
     $mensajeOk = session('success');
     $mensajeError = session('error');

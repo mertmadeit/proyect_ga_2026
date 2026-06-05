@@ -1,4 +1,4 @@
-@extends('master_nav')
+﻿@extends('master_nav')
 @section('title', 'Crear factura')
 
 @section('content')
@@ -30,27 +30,27 @@
 			{!! Form::open(['url' => $facturasStoreUrl]) !!}
 				<div class="grid gap-5 sm:grid-cols-2">
 					<div class="space-y-2">
-						<label for="valor" class="block text-sm font-bold text-(--text)">Valor</label>
+						<label for="valor" class="block text-sm font-bold text-[var(--text)]">Valor</label>
 						{!! Form::number('valor', old('valor'), ['id' => 'valor', 'class' => 'ui-field', 'required' => 'required', 'placeholder' => 'Valor de la factura']) !!}
 					</div>
 
 					<div class="space-y-2">
-						<label for="idcliente" class="block text-sm font-bold text-(--text)">Cliente</label>
+						<label for="idcliente" class="block text-sm font-bold text-[var(--text)]">Cliente</label>
 						{!! Form::select('idcliente', $clientes ?? [], old('idcliente'), ['id' => 'idcliente', 'class' => 'ui-field', 'required' => 'required', 'placeholder' => 'Selecciona un cliente']) !!}
 					</div>
 
 					<div class="space-y-2">
-						<label for="idforma" class="block text-sm font-bold text-(--text)">Forma de pago</label>
+						<label for="idforma" class="block text-sm font-bold text-[var(--text)]">Forma de pago</label>
 						{!! Form::select('idforma', $formas ?? [], old('idforma'), ['id' => 'idforma', 'class' => 'ui-field', 'required' => 'required', 'placeholder' => 'Selecciona una forma']) !!}
 					</div>
 
 					<div class="space-y-2">
-						<label for="idestado" class="block text-sm font-bold text-(--text)">Estado</label>
+						<label for="idestado" class="block text-sm font-bold text-[var(--text)]">Estado</label>
 						{!! Form::select('idestado', $estados ?? [], old('idestado'), ['id' => 'idestado', 'class' => 'ui-field', 'required' => 'required', 'placeholder' => 'Selecciona un estado']) !!}
 					</div>
 
 					<div class="space-y-2 sm:col-span-2">
-						<label for="detalles" class="block text-sm font-bold text-(--text)">Detalles</label>
+						<label for="detalles" class="block text-sm font-bold text-[var(--text)]">Detalles</label>
 						{!! Form::textarea('detalles', old('detalles'), ['id' => 'detalles', 'rows' => 4, 'class' => 'ui-field', 'placeholder' => 'Detalles de la factura']) !!}
 					</div>
 				</div>
