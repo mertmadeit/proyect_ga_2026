@@ -38,7 +38,9 @@ Configura estas variables en Railway (servicio de la app):
 - `MAIL_MAILER=resend`
 - `RESEND_KEY`
 - `MAIL_FROM_ADDRESS` (de dominio verificado en Resend)
-- `MAIL_FROM_NAME`
+- `MAIL_FROM_NAME=Virelle`
+
+Nota Resend: `onboarding@resend.dev` solo sirve para pruebas y solo puede enviar al correo dueno de la cuenta Resend. Para enviar a clientes o usuarios reales, verifica tu dominio en Resend y usa un remitente de ese dominio, por ejemplo `noreply@tu-dominio.com`. En Railway escribe `MAIL_FROM_NAME=Virelle` directamente; no uses `"${APP_NAME}"`, porque Railway puede pasarlo como texto literal.
 
 ## 5) Build command (en Railway Dashboard)
 
@@ -60,6 +62,7 @@ Luego (opcional recomendado):
 
 ```bash
 php artisan storage:link
+php artisan optimize:clear
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache

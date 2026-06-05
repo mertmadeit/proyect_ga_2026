@@ -1,5 +1,11 @@
 <?php
 
+$fromName = env('MAIL_FROM_NAME', env('APP_NAME', 'Example'));
+
+if ($fromName === '${APP_NAME}') {
+    $fromName = env('APP_NAME', 'Example');
+}
+
 return [
 
     /*
@@ -110,7 +116,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'name' => $fromName,
     ],
 
 ];
