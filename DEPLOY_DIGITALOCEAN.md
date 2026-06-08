@@ -34,7 +34,7 @@ Configura estas variables en el componente web:
 - `APP_DEBUG=false`
 - `APP_URL=https://tu-dominio`
 - `APP_KEY`
-- `LOG_CHANNEL=stack`
+- `LOG_CHANNEL=stderr`
 - `LOG_LEVEL=info`
 - `DB_CONNECTION=mysql`
 - `DB_HOST`
@@ -54,10 +54,15 @@ No subas credenciales reales al repositorio. Usa `.env.production.example` solo 
 
 ## Migraciones
 
-El `Procfile` incluye un proceso `release` para migraciones:
+El `Procfile` corre migraciones y cachea Laravel antes de levantar Apache:
 
 ```bash
+php artisan optimize:clear
 php artisan migrate --force
+php artisan storage:link
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
 ```
 
-Si App Platform no ejecuta procesos `release` en tu configuracion, corre manualmente el mismo comando desde la consola/job de DigitalOcean despues del primer deploy.
+Si el deploy queda en 500, revisa primero los Runtime Logs de DigitalOcean. Con `LOG_CHANNEL=stderr`, Laravel debe mostrar ahi la excepcion real.
