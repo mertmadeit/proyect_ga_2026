@@ -3,11 +3,30 @@
 use Illuminate\Support\Str;
 
 $mysqlAttrSslCa = null;
+$mysqlAttrSslVerifyServerCert = null;
 
 if (defined('Pdo\\Mysql::ATTR_SSL_CA')) {
     $mysqlAttrSslCa = Pdo\Mysql::ATTR_SSL_CA;
 } elseif (defined('PDO::MYSQL_ATTR_SSL_CA')) {
     $mysqlAttrSslCa = constant('PDO::MYSQL_ATTR_SSL_CA');
+}
+
+if (defined('Pdo\\Mysql::ATTR_SSL_VERIFY_SERVER_CERT')) {
+    $mysqlAttrSslVerifyServerCert = Pdo\Mysql::ATTR_SSL_VERIFY_SERVER_CERT;
+} elseif (defined('PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT')) {
+    $mysqlAttrSslVerifyServerCert = constant('PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT');
+}
+
+$mysqlSslOptions = [];
+
+if (extension_loaded('pdo_mysql') && strtolower((string) env('DB_SSL_MODE')) === 'required') {
+    if ($mysqlAttrSslCa !== null && filled(env('MYSQL_ATTR_SSL_CA'))) {
+        $mysqlSslOptions[$mysqlAttrSslCa] = env('MYSQL_ATTR_SSL_CA');
+    }
+
+    if ($mysqlAttrSslVerifyServerCert !== null) {
+        $mysqlSslOptions[$mysqlAttrSslVerifyServerCert] = (bool) env('DB_SSL_VERIFY_SERVER_CERT', false);
+    }
 }
 
 return [
@@ -65,9 +84,7 @@ return [
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
-            'options' => extension_loaded('pdo_mysql') && $mysqlAttrSslCa !== null
-                ? array_filter([$mysqlAttrSslCa => env('MYSQL_ATTR_SSL_CA')])
-                : [],
+            'options' => $mysqlSslOptions,
         ],
 
         'mariadb' => [
@@ -85,9 +102,7 @@ return [
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
-            'options' => extension_loaded('pdo_mysql') && $mysqlAttrSslCa !== null
-                ? array_filter([$mysqlAttrSslCa => env('MYSQL_ATTR_SSL_CA')])
-                : [],
+            'options' => $mysqlSslOptions,
         ],
 
         'pgsql' => [

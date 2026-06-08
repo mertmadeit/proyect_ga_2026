@@ -42,8 +42,10 @@ Configura estas variables en el componente web:
 - `DB_DATABASE=defaultdb`
 - `DB_USERNAME`
 - `DB_PASSWORD`
-- `SESSION_DRIVER=database`
-- `CACHE_STORE=database`
+- `DB_SSL_MODE=required`
+- `DB_SSL_VERIFY_SERVER_CERT=false`
+- `SESSION_DRIVER=cookie`
+- `CACHE_STORE=file`
 - `QUEUE_CONNECTION=database`
 - `MAIL_MAILER=resend`
 - `RESEND_KEY`
@@ -54,7 +56,7 @@ No subas credenciales reales al repositorio. Usa `.env.production.example` solo 
 
 ## Migraciones
 
-El `Procfile` corre migraciones y cachea Laravel antes de levantar Apache:
+El `Procfile` ejecuta `scripts/start-web.sh`, que valida variables requeridas, corre migraciones y cachea Laravel antes de levantar Apache:
 
 ```bash
 php artisan optimize:clear
@@ -66,3 +68,5 @@ php artisan view:cache
 ```
 
 Si el deploy queda en 500, revisa primero los Runtime Logs de DigitalOcean. Con `LOG_CHANNEL=stderr`, Laravel debe mostrar ahi la excepcion real.
+
+Para el primer deploy usa `SESSION_DRIVER=cookie` y `CACHE_STORE=file`; asi la pagina publica no depende de la tabla `sessions` ni de la tabla `cache` para renderizar. Cuando la base ya este estable, puedes volver a `SESSION_DRIVER=database` si lo necesitas.

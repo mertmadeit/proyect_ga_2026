@@ -1,1 +1,1 @@
-web: php artisan optimize:clear && php artisan migrate --force && (php artisan storage:link || true) && php artisan config:cache && php artisan route:cache && php artisan view:cache && heroku-php-apache2 public/
+web: sh scripts/start-web.sh
