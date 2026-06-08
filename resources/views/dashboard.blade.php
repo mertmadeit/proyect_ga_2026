@@ -1,18 +1,24 @@
 ﻿<x-app-layout>
     <x-slot name="header">
+        @php
+            $isAdmin = auth()->check() && (int) auth()->user()->idperfil === 1;
+        @endphp
         <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <h1 class="text-2xl font-extrabold tracking-tight text-[var(--brand-green-dark)]">Dashboard</h1>
                 <p class="mt-1 text-sm text-[var(--muted)]">Vista rapida de ventas, clientes e inventario.</p>
             </div>
             <div class="flex flex-wrap gap-2">
-                <a href="{{ route('clientes.create') }}" class="ui-button-secondary">Nuevo cliente</a>
+                @if ($isAdmin)
+                    <a href="{{ route('clientes.create') }}" class="ui-button-secondary">Nuevo cliente</a>
+                @endif
                 <a href="{{ route('facturas.index') }}" class="ui-button-primary">Ver facturas</a>
             </div>
         </div>
     </x-slot>
 
     @php
+        $isAdmin = auth()->check() && (int) auth()->user()->idperfil === 1;
         $ticketPromedio = $stats['facturas'] > 0
             ? $stats['facturacion_total'] / $stats['facturas']
             : 0;
@@ -51,7 +57,9 @@
                     <h2 class="text-base font-extrabold text-[var(--brand-green-dark)]">Operacion</h2>
                     <p class="mt-1 text-sm text-[var(--muted)]">Accesos frecuentes para el dia a dia.</p>
                 </div>
-                <a href="{{ route('facturas.reporte') }}" class="ui-button-secondary">Reporte PDF</a>
+                @if ($isAdmin)
+                    <a href="{{ route('facturas.reporte') }}" class="ui-button-secondary">Reporte PDF</a>
+                @endif
             </div>
 
             <div class="mt-4 grid gap-3 sm:grid-cols-3">

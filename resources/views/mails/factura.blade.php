@@ -49,8 +49,12 @@
                                                 <td style="padding:13px 16px;border-bottom:1px solid #e1ebe5;color:#1d2b2a;font-size:14px;text-align:right;">{{ $estado?->estado ?? '-' }}</td>
                                             </tr>
                                             <tr>
-                                                <td style="padding:13px 16px;color:#567568;font-size:13px;font-weight:700;">Valor</td>
-                                                <td style="padding:13px 16px;color:#123f32;font-size:18px;font-weight:700;text-align:right;">${{ number_format((float) $factura->valor, 2) }}</td>
+                                                <td style="padding:13px 16px;border-bottom:1px solid #e1ebe5;color:#567568;font-size:13px;font-weight:700;">Valor</td>
+                                                <td style="padding:13px 16px;border-bottom:1px solid #e1ebe5;color:#123f32;font-size:18px;font-weight:700;text-align:right;">${{ number_format((float) $factura->valor, 2) }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:13px 16px;color:#567568;font-size:13px;font-weight:700;vertical-align:top;">Detalles</td>
+                                                <td style="padding:13px 16px;color:#1d2b2a;font-size:14px;line-height:1.6;text-align:right;">{!! $factura->detalles ?: '-' !!}</td>
                                             </tr>
                                         </table>
 

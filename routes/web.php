@@ -13,12 +13,21 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::resource('perfiles', PerfilesController::class);
-    Route::resource('clientes', ClientesController::class);
+    Route::resource('perfiles', PerfilesController::class)
+        ->only(['index']);
+    Route::resource('perfiles', PerfilesController::class)
+        ->except(['index', 'show'])
+        ->middleware('admin');
+    Route::resource('clientes', ClientesController::class)
+        ->only(['index']);
+    Route::resource('clientes', ClientesController::class)
+        ->except(['index', 'show'])
+        ->middleware('admin');
     Route::get('facturas/reporte/pdf', [PdfController::class, 'facturas'])
-        ->name('facturas.reporte');
+        ->name('facturas.reporte')
+        ->middleware('admin');
     Route::resource('facturas', FacturasController::class)
-        ->only(['index', 'show']);
+        ->only(['index']);
     Route::resource('facturas', FacturasController::class)
         ->except(['index', 'show'])
         ->middleware('admin');

@@ -3,6 +3,9 @@
 @section('title', 'Facturas')
 
 @section('content')
+@php
+	$isAdmin = auth()->check() && (int) auth()->user()->idperfil === 1;
+@endphp
 <section class="py-4">
 	<div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 		<div>
@@ -11,10 +14,8 @@
 			<p class="mt-2 text-sm text-[var(--muted)]">Consulta clientes, montos y archivos PDF registrados.</p>
 		</div>
 		<div class="flex flex-wrap items-center justify-end gap-2">
-			@auth
+			@if ($isAdmin)
 				<a href="{{ route('facturas.reporte') }}" class="ui-button-secondary">Descargar reporte PDF</a>
-			@endauth
-			@if (auth()->check() && (int) auth()->user()->idperfil === 1)
 				<a href="{{ route('facturas.create') }}" class="ui-button-primary">Agregar factura</a>
 			@endif
 		</div>
@@ -68,7 +69,7 @@
 								@endif
 							</td>
 							<td class="px-6 py-4 text-right">
-								@if (auth()->check() && (int) auth()->user()->idperfil === 1)
+								@if ($isAdmin)
 									<div class="ui-actions">
 										<a href="{{ route('facturas.edit', $factura->id) }}" class="ui-button-secondary">Editar</a>
 										<form action="{{ route('facturas.destroy', $factura->id) }}" method="POST">
@@ -87,7 +88,7 @@
 							<td colspan="6" class="ui-empty px-6 py-16 text-center">
 								<p class="text-lg font-extrabold text-[var(--brand-green-dark)]">No hay facturas registradas.</p>
 								<p class="mt-2 text-sm text-[var(--muted)]">Crea la primera factura para comenzar el control de ventas.</p>
-								@if (auth()->check() && (int) auth()->user()->idperfil === 1)
+								@if ($isAdmin)
 									<a href="{{ route('facturas.create') }}" class="ui-button-primary mt-4">Agregar factura</a>
 								@endif
 							</td>

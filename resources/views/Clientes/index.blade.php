@@ -3,6 +3,9 @@
 @section('title', 'Clientes')
 
 @section('content')
+@php
+	$isAdmin = auth()->check() && (int) auth()->user()->idperfil === 1;
+@endphp
 <section class="py-4">
 	<div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 		<div>
@@ -10,7 +13,9 @@
 			<h1 class="display-font mt-3 text-4xl text-[var(--text)]">Clientes</h1>
 			<p class="mt-2 text-sm text-[var(--muted)]">Gestiona contactos, RFC y datos comerciales desde una tabla clara.</p>
 		</div>
-		<a href="{{ route('clientes.create') }}" class="ui-button-primary">Agregar cliente</a>
+		@if ($isAdmin)
+			<a href="{{ route('clientes.create') }}" class="ui-button-primary">Agregar cliente</a>
+		@endif
 	</div>
 
 	<div class="mb-5 grid gap-4 sm:grid-cols-3">
@@ -46,7 +51,9 @@
 						<th class="px-6 py-4 text-left text-xs font-bold uppercase tracking-[0.16em] text-[var(--muted)]">RFC</th>
 						<th class="px-6 py-4 text-left text-xs font-bold uppercase tracking-[0.16em] text-[var(--muted)]">Telefono</th>
 						<th class="px-6 py-4 text-left text-xs font-bold uppercase tracking-[0.16em] text-[var(--muted)]">Email</th>
-						<th class="px-6 py-4 text-right text-xs font-bold uppercase tracking-[0.16em] text-[var(--muted)]">Acciones</th>
+						@if ($isAdmin)
+							<th class="px-6 py-4 text-right text-xs font-bold uppercase tracking-[0.16em] text-[var(--muted)]">Acciones</th>
+						@endif
 					</tr>
 				</thead>
 				<tbody class="divide-y divide-black/5 bg-white">
@@ -57,23 +64,27 @@
 							<td class="px-6 py-4 text-sm text-[var(--muted)]">{{ $cliente->rfc }}</td>
 							<td class="px-6 py-4 text-sm text-[var(--muted)]">{{ $cliente->telefono }}</td>
 							<td class="px-6 py-4 text-sm text-[var(--muted)]">{{ $cliente->email }}</td>
-							<td class="px-6 py-4 text-right">
-								<div class="ui-actions">
-									<a href="{{ route('clientes.edit', $cliente->id) }}" class="ui-button-secondary">Editar</a>
-									<form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST">
-										@csrf
-										@method('DELETE')
-										<button type="submit" onclick="return confirm('Eliminar cliente?')" class="ui-button-danger">Eliminar</button>
-									</form>
-								</div>
-							</td>
+							@if ($isAdmin)
+								<td class="px-6 py-4 text-right">
+									<div class="ui-actions">
+										<a href="{{ route('clientes.edit', $cliente->id) }}" class="ui-button-secondary">Editar</a>
+										<form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST">
+											@csrf
+											@method('DELETE')
+											<button type="submit" onclick="return confirm('Eliminar cliente?')" class="ui-button-danger">Eliminar</button>
+										</form>
+									</div>
+								</td>
+							@endif
 						</tr>
 					@empty
 						<tr>
-							<td colspan="6" class="ui-empty px-6 py-16 text-center">
+							<td colspan="{{ $isAdmin ? 6 : 5 }}" class="ui-empty px-6 py-16 text-center">
 								<p class="text-lg font-extrabold text-[var(--brand-green-dark)]">No hay clientes registrados.</p>
 								<p class="mt-2 text-sm text-[var(--muted)]">Agrega el primer contacto para empezar a facturar.</p>
-								<a href="{{ route('clientes.create') }}" class="ui-button-primary mt-4">Agregar cliente</a>
+								@if ($isAdmin)
+									<a href="{{ route('clientes.create') }}" class="ui-button-primary mt-4">Agregar cliente</a>
+								@endif
 							</td>
 						</tr>
 					@endforelse

@@ -7,7 +7,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 
 class FacturaCreada extends Mailable
 {
@@ -40,6 +42,14 @@ class FacturaCreada extends Mailable
 
     public function attachments(): array
     {
-        return [];
+        if (empty($this->factura->archivo) || !Storage::disk('archivos')->exists($this->factura->archivo)) {
+            return [];
+        }
+
+        return [
+            Attachment::fromPath(Storage::disk('archivos')->path($this->factura->archivo))
+                ->as($this->factura->archivo)
+                ->withMime('application/pdf'),
+        ];
     }
 }

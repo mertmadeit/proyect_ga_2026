@@ -25,7 +25,10 @@ class RegisteredUserController extends Controller
     public function create(): View
     {
         $this->ensureDefaultPerfiles();
-        $perfiles = Perfil::orderBy('nombre')->get();
+        $perfiles = Perfil::query()
+            ->whereIn('nombre', ['Admin', 'Empleado'])
+            ->orderBy('nombre')
+            ->get();
         return view('auth.register', compact('perfiles'));
     }
 
@@ -42,17 +45,11 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'idperfil' => ['nullable', 'integer', 'exists:perfiles,id'],
+            'idperfil' => ['required', 'integer', 'exists:perfiles,id'],
         ]);
 
         $passwordPlano = (string) $request->password;
-        $perfilId = $request->filled('idperfil')
-            ? (int) $request->idperfil
-            : ((int) (Perfil::query()->value('id') ?? 0));
-
-        if ($perfilId === 0) {
-            $perfilId = (int) Perfil::query()->create(['nombre' => 'Admin'])->id;
-        }
+        $perfilId = (int) $request->idperfil;
 
         $user = User::create([
             'name' => $request->name,
@@ -83,8 +80,7 @@ class RegisteredUserController extends Controller
     {
         Perfil::query()->upsert([
             ['id' => 1, 'nombre' => 'Admin'],
-            ['id' => 2, 'nombre' => 'Supervisor'],
-            ['id' => 3, 'nombre' => 'Consulta'],
+            ['id' => 2, 'nombre' => 'Empleado'],
         ], ['id'], ['nombre']);
     }
 }

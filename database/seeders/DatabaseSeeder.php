@@ -16,8 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         Perfil::query()->upsert([
             ['id' => 1, 'nombre' => 'Admin'],
-            ['id' => 2, 'nombre' => 'Supervisor'],
-            ['id' => 3, 'nombre' => 'Consulta'],
+            ['id' => 2, 'nombre' => 'Empleado'],
         ], ['id'], ['nombre']);
 
         User::factory()->create([

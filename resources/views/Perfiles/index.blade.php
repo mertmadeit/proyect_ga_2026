@@ -3,6 +3,9 @@
 @section('title', 'Perfiles')
 
 @section('content')
+@php
+	$isAdmin = auth()->check() && (int) auth()->user()->idperfil === 1;
+@endphp
 <section class="py-4">
 	<div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 		<div>
@@ -10,7 +13,9 @@
 			<h1 class="display-font mt-3 text-4xl text-[var(--text)]">Perfiles</h1>
 			<p class="mt-2 text-sm text-[var(--muted)]">Controla los perfiles disponibles para los usuarios.</p>
 		</div>
-		<a href="{{ route('perfiles.create') }}" class="ui-button-primary">Agregar perfil</a>
+		@if ($isAdmin)
+			<a href="{{ route('perfiles.create') }}" class="ui-button-primary">Agregar perfil</a>
+		@endif
 	</div>
 
 	<div class="mb-5 grid gap-4 sm:grid-cols-3">
@@ -41,7 +46,9 @@
 					<tr>
 						<th class="px-6 py-4 text-left text-xs font-bold uppercase tracking-[0.16em] text-[var(--muted)]">No.</th>
 						<th class="px-6 py-4 text-left text-xs font-bold uppercase tracking-[0.16em] text-[var(--muted)]">Nombre</th>
-						<th class="px-6 py-4 text-right text-xs font-bold uppercase tracking-[0.16em] text-[var(--muted)]">Acciones</th>
+						@if ($isAdmin)
+							<th class="px-6 py-4 text-right text-xs font-bold uppercase tracking-[0.16em] text-[var(--muted)]">Acciones</th>
+						@endif
 					</tr>
 				</thead>
 				<tbody class="divide-y divide-black/5 bg-white">
@@ -49,23 +56,27 @@
 						<tr class="transition hover:bg-[var(--surface)]">
 							<td class="px-6 py-4 text-sm font-bold text-[var(--brand-green-dark)]">#{{ $perfil->id }}</td>
 							<td class="px-6 py-4 text-sm font-semibold text-[var(--text)]">{{ $perfil->nombre }}</td>
-							<td class="px-6 py-4 text-right">
-								<div class="ui-actions">
-									<a href="{{ route('perfiles.edit', $perfil->id) }}" class="ui-button-secondary">Editar</a>
-									<form action="{{ route('perfiles.destroy', $perfil->id) }}" method="POST">
-										@csrf
-										@method('DELETE')
-										<button type="submit" onclick="return confirm('Eliminar perfil?')" class="ui-button-danger">Eliminar</button>
-									</form>
-								</div>
-							</td>
+							@if ($isAdmin)
+								<td class="px-6 py-4 text-right">
+									<div class="ui-actions">
+										<a href="{{ route('perfiles.edit', $perfil->id) }}" class="ui-button-secondary">Editar</a>
+										<form action="{{ route('perfiles.destroy', $perfil->id) }}" method="POST">
+											@csrf
+											@method('DELETE')
+											<button type="submit" onclick="return confirm('Eliminar perfil?')" class="ui-button-danger">Eliminar</button>
+										</form>
+									</div>
+								</td>
+							@endif
 						</tr>
 					@empty
 						<tr>
-							<td colspan="3" class="ui-empty px-6 py-16 text-center">
+							<td colspan="{{ $isAdmin ? 3 : 2 }}" class="ui-empty px-6 py-16 text-center">
 								<p class="text-lg font-extrabold text-[var(--brand-green-dark)]">No hay perfiles registrados.</p>
 								<p class="mt-2 text-sm text-[var(--muted)]">Crea un perfil para organizar accesos.</p>
-								<a href="{{ route('perfiles.create') }}" class="ui-button-primary mt-4">Agregar perfil</a>
+								@if ($isAdmin)
+									<a href="{{ route('perfiles.create') }}" class="ui-button-primary mt-4">Agregar perfil</a>
+								@endif
 							</td>
 						</tr>
 					@endforelse
