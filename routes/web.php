@@ -8,9 +8,7 @@ use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\FacturasController;
 use App\Http\Controllers\PdfController;
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::view('/', 'index');
 
 Route::middleware('auth')->group(function () {
     Route::resource('perfiles', PerfilesController::class)

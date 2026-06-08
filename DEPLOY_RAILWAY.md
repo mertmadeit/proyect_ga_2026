@@ -12,8 +12,9 @@ Este proyecto ya incluye `railway.json` con `startCommand` para Laravel.
 
 ## 3) Crear base de datos
 
-1. En el mismo proyecto, agrega un servicio `MySQL`.
-2. Railway creara variables de conexion.
+Puedes usar MySQL de Railway o una base externa como DigitalOcean Managed MySQL.
+
+Si usas DigitalOcean, no pegues credenciales en archivos del repo. Configuralas como variables del servicio web en Railway.
 
 ## 4) Variables de entorno (servicio web)
 
@@ -27,11 +28,12 @@ Configura estas variables en Railway (servicio de la app):
 - `LOG_CHANNEL=stack`
 - `LOG_LEVEL=info`
 - `DB_CONNECTION=mysql`
-- `DB_HOST` (desde servicio MySQL Railway)
-- `DB_PORT` (desde servicio MySQL Railway)
-- `DB_DATABASE` (desde servicio MySQL Railway)
-- `DB_USERNAME` (desde servicio MySQL Railway)
-- `DB_PASSWORD` (desde servicio MySQL Railway)
+- `DB_HOST` (host de MySQL; por ejemplo el host externo de DigitalOcean)
+- `DB_PORT` (puerto de MySQL; DigitalOcean suele usar `25060`)
+- `DB_DATABASE` (nombre de base; por ejemplo `defaultdb`)
+- `DB_USERNAME` (usuario de produccion)
+- `DB_PASSWORD` (password de produccion)
+- `MYSQL_ATTR_SSL_CA` (opcional/recomendado si usas el certificado CA de DigitalOcean)
 - `SESSION_DRIVER=database`
 - `CACHE_STORE=database`
 - `QUEUE_CONNECTION=database`
@@ -41,6 +43,8 @@ Configura estas variables en Railway (servicio de la app):
 - `MAIL_FROM_NAME=Virelle`
 
 Nota Resend: `onboarding@resend.dev` solo sirve para pruebas y solo puede enviar al correo dueno de la cuenta Resend. Para enviar a clientes o usuarios reales, verifica tu dominio en Resend y usa un remitente de ese dominio, por ejemplo `noreply@tu-dominio.com`. En Railway escribe `MAIL_FROM_NAME=Virelle` directamente; no uses `"${APP_NAME}"`, porque Railway puede pasarlo como texto literal.
+
+Puedes tomar `.env.production.example` como checklist, pero los valores reales deben vivir en Railway.
 
 ## 5) Build command (en Railway Dashboard)
 
@@ -52,15 +56,21 @@ composer install --no-dev --optimize-autoloader --no-interaction && npm ci && np
 
 ## 6) Post deploy / migraciones
 
-Despues del primer deploy, corre:
+El `startCommand` de `railway.json` ya ejecuta migraciones, crea el link de storage y cachea config/rutas/vistas en cada arranque:
+
+```bash
+php artisan optimize:clear
+php artisan migrate --force
+php artisan storage:link
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```
+
+Si quieres correrlo manualmente despues del primer deploy:
 
 ```bash
 php artisan migrate --force
-```
-
-Luego (opcional recomendado):
-
-```bash
 php artisan storage:link
 php artisan optimize:clear
 php artisan config:cache
