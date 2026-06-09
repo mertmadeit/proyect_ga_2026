@@ -2,7 +2,11 @@
 
 ## 1) Preparar repositorio
 
-Este proyecto ya incluye `railway.json` con `startCommand` para Laravel.
+Este proyecto ya incluye `railway.json` con `startCommand` para Laravel:
+
+```bash
+sh scripts/start-railway.sh
+```
 
 ## 2) Crear proyecto en Railway
 
@@ -16,27 +20,33 @@ Puedes usar MySQL de Railway o una base externa como DigitalOcean Managed MySQL.
 
 Si usas DigitalOcean, no pegues credenciales en archivos del repo. Configuralas como variables del servicio web en Railway.
 
-## 4) Variables de entorno (servicio web)
+## 4) Variables de entorno minimas (servicio web)
 
 Configura estas variables en Railway (servicio de la app):
 
-- `APP_NAME`
+- `APP_NAME=Virelle`
 - `APP_ENV=production`
 - `APP_DEBUG=false`
 - `APP_URL=https://<tu-dominio-railway>`
 - `APP_KEY` (genera una nueva para produccion)
-- `LOG_CHANNEL=stack`
+- `LOG_CHANNEL=stderr`
 - `LOG_LEVEL=info`
 - `DB_CONNECTION=mysql`
 - `DB_HOST` (host de MySQL; por ejemplo el host externo de DigitalOcean)
 - `DB_PORT` (puerto de MySQL; DigitalOcean suele usar `25060`)
-- `DB_DATABASE` (nombre de base; por ejemplo `defaultdb`)
+- `DB_DATABASE` (nombre de base; por ejemplo `mitiendita`)
 - `DB_USERNAME` (usuario de produccion)
 - `DB_PASSWORD` (password de produccion)
+- `DB_SSL_MODE=required` (si usas DigitalOcean Managed MySQL)
+- `DB_SSL_VERIFY_SERVER_CERT=false` (si usas DigitalOcean Managed MySQL sin certificado CA)
 - `MYSQL_ATTR_SSL_CA` (opcional/recomendado si usas el certificado CA de DigitalOcean)
-- `SESSION_DRIVER=database`
-- `CACHE_STORE=database`
+- `SESSION_DRIVER=cookie`
+- `CACHE_STORE=file`
 - `QUEUE_CONNECTION=database`
+- `MAIL_MAILER=log`
+
+Cuando la app ya abra bien, puedes cambiar el correo a Resend agregando:
+
 - `MAIL_MAILER=resend`
 - `RESEND_KEY`
 - `MAIL_FROM_ADDRESS` (de dominio verificado en Resend)
@@ -56,7 +66,7 @@ composer install --no-dev --optimize-autoloader --no-interaction && npm ci && np
 
 ## 6) Post deploy / migraciones
 
-El `startCommand` de `railway.json` ya ejecuta migraciones, crea el link de storage y cachea config/rutas/vistas en cada arranque:
+El script `scripts/start-railway.sh` ya ejecuta migraciones, crea el link de storage y cachea config/rutas/vistas en cada arranque:
 
 ```bash
 php artisan optimize:clear
@@ -65,6 +75,12 @@ php artisan storage:link
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
+```
+
+Despues sirve Laravel con el puerto asignado por Railway:
+
+```bash
+php artisan serve --host=0.0.0.0 --port="${PORT:-8080}"
 ```
 
 Si quieres correrlo manualmente despues del primer deploy:
