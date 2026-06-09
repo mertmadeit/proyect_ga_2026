@@ -14,6 +14,11 @@ require_env() {
 require_env APP_KEY
 
 export DB_CONNECTION="${DB_CONNECTION:-mysql}"
+export DB_HOST="${DB_HOST:-${MYSQLHOST:-}}"
+export DB_PORT="${DB_PORT:-${MYSQLPORT:-}}"
+export DB_DATABASE="${DB_DATABASE:-${MYSQLDATABASE:-}}"
+export DB_USERNAME="${DB_USERNAME:-${MYSQLUSER:-}}"
+export DB_PASSWORD="${DB_PASSWORD:-${MYSQLPASSWORD:-}}"
 
 if [ -z "$(printenv APP_URL || true)" ]; then
     echo "APP_URL is not set; Laravel will use its default URL." >&2
