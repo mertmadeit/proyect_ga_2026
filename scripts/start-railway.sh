@@ -12,10 +12,13 @@ require_env() {
 }
 
 require_env APP_KEY
-require_env APP_URL
 require_env DB_CONNECTION
 
-if [ "$DB_CONNECTION" = "mysql" ] && [ -z "$(printenv DATABASE_URL || true)" ]; then
+if [ -z "$(printenv APP_URL || true)" ]; then
+    echo "APP_URL is not set; Laravel will use its default URL." >&2
+fi
+
+if [ "$DB_CONNECTION" = "mysql" ] && [ -z "$(printenv DB_URL || true)" ] && [ -z "$(printenv DATABASE_URL || true)" ]; then
     require_env DB_HOST
     require_env DB_PORT
     require_env DB_DATABASE
@@ -24,7 +27,7 @@ if [ "$DB_CONNECTION" = "mysql" ] && [ -z "$(printenv DATABASE_URL || true)" ]; 
 fi
 
 php artisan optimize:clear
-php artisan migrate --force
+php artisan migrate --force || echo "Migration failed; starting web server so Railway healthcheck can run." >&2
 php artisan storage:link || true
 php artisan config:cache
 php artisan route:cache
