@@ -185,6 +185,32 @@ button{cursor:pointer}
   border-radius:0 0 8px 8px;
 }
 
+.invoice-form-shell,
+.invoice-form-shell form,
+.invoice-form-grid,
+.invoice-form-grid > *{
+  min-width:0;
+  max-width:100%;
+}
+
+.invoice-form-shell .ck.ck-editor{
+  width:100%;
+  min-width:0;
+  max-width:100%;
+}
+
+.invoice-form-shell .ck.ck-toolbar,
+.invoice-form-shell .ck.ck-toolbar__items,
+.invoice-form-shell .ck.ck-editor__main,
+.invoice-form-shell .ck.ck-editor__editable{
+  min-width:0;
+  max-width:100%;
+}
+
+.invoice-form-shell .ck.ck-toolbar__items{
+  flex-wrap:wrap !important;
+}
+
 .ui-kicker{
   display:inline-flex;
   align-items:center;
@@ -350,6 +376,16 @@ button{cursor:pointer}
 @media (max-width: 640px){
   .ui-hero{min-height:auto}
   .brand-nav{top:8px;margin-top:8px}
+  .invoice-form-header{
+    align-items:stretch;
+    flex-direction:column;
+  }
+  .invoice-form-header > div{min-width:0}
+  .invoice-form-title{
+    font-size:2rem;
+    line-height:1.1;
+  }
+  .invoice-form-shell{padding:1rem}
   .ui-button-primary,
   .ui-button-secondary,
   .ui-button-danger{width:100%}

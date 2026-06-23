@@ -7,16 +7,16 @@
 		$facturasStoreUrl = Route::has('facturas.store') ? route('facturas.store') : url('facturas');
 	@endphp
 
-	<section class="mx-auto max-w-3xl py-4">
-		<div class="mb-6 flex items-center justify-between gap-3">
+	<section class="mx-auto min-w-0 max-w-3xl py-4">
+		<div class="invoice-form-header mb-6 flex items-center justify-between gap-3">
 			<div>
 				<span class="ui-kicker">Facturas</span>
-				<h1 class="display-font mt-3 text-4xl">Crear factura</h1>
+				<h1 class="invoice-form-title display-font mt-3 text-4xl">Crear factura</h1>
 			</div>
 			<a href="{{ $facturasIndexUrl }}" class="ui-button-secondary">Volver</a>
 		</div>
 
-		<div class="ui-panel rounded-[22px] p-6 sm:p-8">
+		<div class="invoice-form-shell ui-panel rounded-[22px] p-6 sm:p-8">
 			@if ($errors->any())
 				<div class="mb-5 rounded-[12px] border border-red-200 bg-red-50 p-4 text-sm text-red-700">
 					<ul class="list-disc pl-5">
@@ -28,7 +28,7 @@
 			@endif
 
 			{!! Form::open(['url' => $facturasStoreUrl]) !!}
-				<div class="grid gap-5 sm:grid-cols-2">
+				<div class="invoice-form-grid grid gap-5 sm:grid-cols-2">
 					<div class="space-y-2">
 						<label for="valor" class="block text-sm font-bold text-[var(--text)]">Valor</label>
 						{!! Form::number('valor', old('valor'), ['id' => 'valor', 'class' => 'ui-field', 'required' => 'required', 'placeholder' => 'Valor de la factura']) !!}
